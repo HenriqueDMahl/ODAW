@@ -1,0 +1,53 @@
+.divd {
+  text-align: center;
+  border:1px solid white;
+  width:80%;
+  background-color:black;
+  color:rgb(229,177,58);
+  margin-left: auto;
+  margin-right: auto;
+}
+.divr{
+  text-align:center;
+  border:1px solid white;
+  width:10%;
+  background-color:white;
+  float:right;
+}
+section {
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+body {
+  background-image: url("space.jpg");
+}
+nav {
+  text-align:center;
+  width:80%;margin-left: auto;
+  margin-right: auto;
+}
+aside {
+  width:50%;
+  color:white;
+}
+section {
+  width:80%;
+  color:white;
+  margin-left: auto;
+  margin-right: auto;
+}
+article {
+  width:80%;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+}
+table {
+  border: 1px solid white;
+  border-collapse: collapse;
+  background-color:rgb(229,177,58);
+}
+th,li {
+  color: black;
+}
