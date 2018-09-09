@@ -17,12 +17,12 @@
       <br>
       <br>
 
-      <form id="form" class="" action="validaform.php" method="POST">
-        1) Nome  <input id="nome" type="text" name="nome" value=""><br>
-        2) Senha  <input id="senha" type="password" name="senha" value=""><br>
-        3) Feedback             <textarea id="feed" name = "feed"></textarea><br><br>
+      <form id="form" class="" action="../PHP/validaform.php" method="POST">
+        1) Nome <input id="nome" type="text" name="nome" value=""><br>
+        2) Senha <input id="senha" type="password" name="senha" value=""><br>
+        3) Feedback <textarea id="feed" name = "feed"></textarea><br><br>
         4) Select <select id = "select" name = "selected">
-              <option value="selected">...................................................</option>
+              <option value="null">...................................................</option>
               <option value="1">The Phantom Manace</option>
               <option value="2">Attack of The Clones</option>
               <option value="3">Revenge Of The Sith</option>
@@ -32,8 +32,8 @@
               <option value="7">The Force Awakens</option>
               <option value="8">The Last Jedi</option>
             </select><br> <br>
-        5)                               POST<input id = "post" type="radio" onclick="postorget('post')" name="s" value="p"> GET <input id = "get" type="radio" onclick="postorget('get')" name="s" value="g"> <br>
-        6) Você gosta de Star Wars? Receba noticias!<input id = "check" nome = "check" type="checkbox" name="gsw" value=""> <br> <br>
+        5) POST<input id = "post" type="radio" onclick="postorget('post')" name="s" value="p"> GET <input id = "get" type="radio" onclick="postorget('get')" name="s" value="g"> <br>
+        6) Você gosta de Star Wars? Receba noticias!<input id = "check" nome = "checkbox" type="checkbox" name="gsw" value=""> <br> <br>
         <button type="submit">Salvar</button> <button type="reset">Limpar</button>
       </form>
 
