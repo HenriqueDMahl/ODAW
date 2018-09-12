@@ -25,7 +25,7 @@
 		$select = "Select * from ". $table . ";";
 		$insert = "insert into ". $table . $campos . " values ('Marvin','Talvez seja util');";
 		$update = "update ". $table . " set nome = 'Marvin Graycastle' where nome = 'Marvin';";
-		$delete = "delete from " . $table . " where nome = 'Marvin Graycastle';";
+		$delete = "delete from " . $table . " where nome = 'Marvin Graycast';";
 
 		$conexao = mysql_connect('localhost','root','');
 

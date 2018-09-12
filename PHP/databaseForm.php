@@ -16,6 +16,18 @@
     <div class="divd">
       <br>
       <br>
+      
+      <form id="form" class="" action="../PHP/databaseForm.php" method="POST">
+        O que deseja fazer?<br><hr>
+        NOVO<input type="radio" name="op" id="novo" value="novo">
+        EDITAR<input type="radio" name="op" id="editar" value="editar">
+        APAGAR<input type="radio" name="op" id="delete" value="deletar">
+        VISUALIZAR<input type="radio" name="op" id="show" value="show">
+        <br><hr>
+        1) Nome      <input id="nome" type="text" name="nome" value=""><br>
+        2) Utilidade <input id="senha" type="text" name="utilidade" value=""><br><hr>
+        <button type="submit">Confirmar</button> <button type="reset">Limpar</button>
+      </form>
         <?php
 
 
@@ -67,8 +79,20 @@
                     echo '<hr>';
 
                     $consulta = mysql_query($select,$conexao);
+                    echo '<hr>';
+                    echo '<table style="text-align:center;background-color:black;margin-left:auto;margin-right:auto;">';
+                    
+                    echo '<tr style="border: 1px solid white;">';
+                    
+                    echo '<th style="color: white;border: 1px solid white;">Nome</th>';
+                    echo '<th style="color: white;border: 1px solid white;">Utilidade</th>';
+                    
+                    echo '</tr>';
+                    
                     while($linha = mysql_fetch_row($consulta))
-                        echo '| Nome = '. $linha[1] . ' | Utilidade = '. $linha[2] . ' |<br>';
+                        echo '<tr style="border: 1px solid white;"><td style="border: 1px solid white;">'. $linha[1] . '</td> <td style="border: 1px solid white;">'. $linha[2] . '</td></tr>';
+                    
+                    echo '</table>';
                     echo '<hr><br>';
                     break;
             }
