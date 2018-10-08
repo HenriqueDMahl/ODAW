@@ -25,7 +25,13 @@
         VISUALIZAR<input type="radio" name="op" id="show" value="show">
         <br><hr>
         1) Nome      <input id="nome" type="text" name="nome" value=""><br>
-        2) Utilidade <input id="senha" type="text" name="utilidade" value=""><br><hr>
+        2) Utilidade <select id = "senha" name = "utilidade">
+              <option value="null">...............................................</option>
+              <option value="Util">Util</option>
+              <option value="Inutil">Inutil</option>
+              <option value="Cepa">Cepa</option>
+            </select><br>
+		3) Roar Approves?<input id = "check" name = "checkbox" type="checkbox" name="gsw" value="SIM"><br><hr>
         <button type="submit">Confirmar</button> <button type="reset">Limpar</button>
       </form>
         <?php
@@ -35,7 +41,16 @@
         $table = "SquadraoSuicida";
         $campos = "(nome,utilidade)";
         $select = "Select * from ". $table . ";";
-        $insert = "insert into ". $table . $campos . " values ('". $_POST["nome"] ."','". $_POST["utilidade"] ."');";
+		$teste = "";
+		if(isset($_POST["checkbox"]))
+		{
+			$teste = "SIM";
+		}
+		else
+		{
+			$teste = "NAO";
+		}
+        $insert = "insert into ". $table . $campos . " values ('". $_POST["nome"] ."','". $_POST["utilidade"] . " " . $teste . "');";
         $update = "update ". $table . " set nome = '". $_POST["nome"] ."', utilidade = '". $_POST["utilidade"] ."' where nome = '".  $_POST["nome"] ."';";
         $delete = "delete from " . $table . " where nome = '".  $_POST["nome"] ."';";
 
