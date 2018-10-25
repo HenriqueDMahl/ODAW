@@ -15,6 +15,14 @@ body {
   background-color: rgb(135,206,235);
 }
 
+.tela_inicial{
+  box-shadow: 10px 10px 5px grey;
+  border-radius: 5px;
+  min-width:650px;
+  max-width:650px;
+}
+
+
 .div_login {
   box-shadow: 10px 10px 5px grey;
   border-radius: 25px;
@@ -29,7 +37,6 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
 }
-
 
 .div_padrao {
   box-shadow: 10px 10px 5px grey;
@@ -70,7 +77,7 @@ p{
 	text-align: center;
 }
 
-#textbox,#email,#pass1,#pass2 {
+#textbox,#email,#pass1,#pass2{
 
 	width: 500px;
 
