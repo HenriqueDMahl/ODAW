@@ -9,6 +9,11 @@ function is_email(){
 	return emailReg.test(email); 
 } 
 
+function is_email_2(email){     
+	var emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+	return emailReg.test(email); 
+} 
+
 function is_pass_equal(){
 	var pass1 = document.getElementById('pass1').value;
 	var pass2 = document.getElementById('pass2').value;
@@ -26,9 +31,26 @@ function is_pass_equal(){
 
 //AINDA TEM QUE COLOCAR MAIS VERIFICAÇÕES
 function valida_registro(){
-	if(is_pass_equal() && is_email){
+	var email = document.getElementById('email').value;
+	var pass1 = document.getElementById('pass1').value;
+	var pass2 = document.getElementById('pass2').value;
+	var fone = document.getElementsByName('fone')[0].value;
+	var nome = document.getElementsByName('nome')[0].value;
+	var ender = document.getElementsByName('ender')[0].value;
+	if(is_pass_equal() && is_email && email != null && pass1 != null && pass2 != null && nome != "" && ender != "" & fone != ""){
 		alert("dados salvos");
 	}else{
 		alert("campos obrigatórios falhos!");
+	}
+}
+
+function nova_senha(){
+	var email = prompt("Informe seu email:", "");
+	var valido = is_email_2(email);
+	if(valido){
+		var texto = "Foi enviado um email de recuperação de senha para: " + email;
+		alert(texto);
+	}else{
+		alert("Email invalido!");
 	}
 }
