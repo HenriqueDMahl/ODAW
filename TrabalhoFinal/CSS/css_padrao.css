@@ -9,7 +9,14 @@ body {
   background-color: rgb(135,206,235);
 }
 
-.divd {
+.body_registro {
+  padding-top: 50px;
+  text-align:center;
+  background-color: rgb(135,206,235);
+}
+
+.div_login {
+  box-shadow: 10px 10px 5px grey;
   border-radius: 25px;
   text-align: center;
   border:1px solid white;
@@ -22,6 +29,69 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
 }
-form{
+
+
+.div_padrao {
+  box-shadow: 10px 10px 5px grey;
+  border-radius: 25px;
+  text-align: center;
+  border:1px solid white;
+  min-width:650px;
+  max-width:650px;
+  background-color:white;
+  color:rgb(229,177,58);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.form_login{
   color: rgb(30,144,255);
 }
+
+.form_registro{
+	text-align: justify;
+	color: black;
+	font-size: 14px;
+}
+
+.warning{
+	text-align: justify;
+	color: red;
+	font-size 10px;
+}
+
+p{
+ padding-left:5em;
+}
+
+.p_sexo{
+	text-align: center;
+}
+
+#textbox,#email,#pass1,#pass2 {
+
+	width: 500px;
+
+}
+
+
+.buttom_cancelar{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-radius: 5px;
+}
+
+.buttom_confirmar{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background: green;
+	border-radius: 5px;
+}
+
+
+
+
+
+
