@@ -38,10 +38,10 @@
 				Outro<input type="radio" name="sexo" id="sexo" value="">
 			</p>
 			<p>
-				<a href="index.html" class="buttom_cancelar">Cancelar</a>
+				<a href="index132.php" class="buttom_cancelar">Cancelar</a>
 				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-	 			<button type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
+	 			<button id="btConfirmar" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
 			</p>
 			
 			

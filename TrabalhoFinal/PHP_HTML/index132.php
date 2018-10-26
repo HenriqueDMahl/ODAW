@@ -28,7 +28,7 @@
 			
 			<div>
 				<br>
-				<a href="registro.html" > Registrar-se</a>
+				<a href="registro.php" > Registrar-se</a>
 				<br>
 				<br>
 				<a href="" onclick="nova_senha()"> Esqueci a senha! </a>
