@@ -3,8 +3,10 @@ function is_email(){
 	var emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 	if(emailReg.test(email)){
 		document.getElementById('email1').style.color = "green";
+		document.getElementById("btConfirmar").disabled = false;
 	}else{
 		document.getElementById('email1').style.color = "red";
+		document.getElementById("btConfirmar").disabled = true;
 	}
 	return emailReg.test(email); 
 } 
@@ -22,9 +24,11 @@ function is_pass_equal(){
 		valido = true;
 		document.getElementById('pass').style.color = "green";
 		document.getElementById('passC').style.color = "green";
+		document.getElementById("btConfirmar").disabled = false;
 	}else{
 		document.getElementById('pass').style.color = "red";
 		document.getElementById('passC').style.color = "red";
+		document.getElementById("btConfirmar").disabled = true;
 	}
 	return valido;
 }
