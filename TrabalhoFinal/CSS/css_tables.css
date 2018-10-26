@@ -1,0 +1,13 @@
+table{
+	border: 1px solid white;
+	width: 100%;
+}
+th {
+	height: 30px;
+}
+td {
+	background-color: white;
+}
+tr {
+
+}

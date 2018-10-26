@@ -1,0 +1,9 @@
+.sino {
+        width: 20px;
+        height: 20px;
+        background-image: url("../IMAGENS/bell.png");
+        margin: 10px;
+    }
+.sino:hover {
+	background-image: url("../IMAGENS/bell2.png");
+}

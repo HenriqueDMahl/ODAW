@@ -1,0 +1,40 @@
+.div_corpo {
+  box-shadow: 10px 10px 5px grey;
+  border-radius: 25px;
+  border:1px solid white;
+  min-width:930px;
+  max-width:930px;
+  background-color:white;
+  color:rgb(229,177,58);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.div_principal{
+  border-radius: 5px;
+  border:1px solid white;
+  text-align: center;
+  min-width:929px;
+  max-width:929px;
+  background-color:gray;
+  color:rgb(229,177,58);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.div_menu {
+  border-radius: 5px;
+  border:1px solid white;
+  min-width:929px;
+  max-width:929px;
+  background-color:gray;
+  color:rgb(229,177,58);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

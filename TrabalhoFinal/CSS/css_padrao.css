@@ -15,14 +15,6 @@ body {
   background-color: rgb(135,206,235);
 }
 
-.tela_inicial{
-  box-shadow: 10px 10px 5px grey;
-  border-radius: 5px;
-  min-width:650px;
-  max-width:650px;
-}
-
-
 .div_login {
   box-shadow: 10px 10px 5px grey;
   border-radius: 25px;
@@ -82,7 +74,6 @@ p{
 	width: 500px;
 
 }
-
 
 .buttom_cancelar{
 	padding-top: 5px;
