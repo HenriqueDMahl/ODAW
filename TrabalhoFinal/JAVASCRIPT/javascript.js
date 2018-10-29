@@ -35,14 +35,34 @@ function is_pass_equal(){
 
 //AINDA TEM QUE COLOCAR MAIS VERIFICAÇÕES
 function valida_registro(){
-	var email = document.getElementById('email').value;
+	var email_usu = document.getElementById('email').value;
 	var pass1 = document.getElementById('pass1').value;
 	var pass2 = document.getElementById('pass2').value;
-	var fone = document.getElementsByName('fone')[0].value;
-	var nome = document.getElementsByName('nome')[0].value;
-	var ender = document.getElementsByName('ender')[0].value;
+	var fone_usu = document.getElementsByName('fone')[0].value;
+	var nome_usu = document.getElementsByName('nome')[0].value;
+	var ender_usu = document.getElementsByName('ender')[0].value;
+	var idade_usu = document.getElementsByName('idade')[0].value;
+	var sexo_uso = "";
+	var radios = document.getElementsByName('sexo');
+	if(radios[0].value != ""){
+		sexo_uso = "M";
+	}
+	if(radios[1].value != ""){
+		sexo_uso = "F";
+	}
+	if(radios[2].value != ""){
+		sexo_uso = "O";
+	}
 	if(is_pass_equal() && is_email && email != null && pass1 != null && pass2 != null && nome != "" && ender != "" & fone != ""){
-		alert("dados salvos");
+		 $('.button').click(function() {
+			 $.ajax({
+				  type: "POST",
+				  url: "../PHP_HTML/operacoes_banco.php",
+				  data: { name: nome_usu, idade: idade_usu, end: ender_usu, pass: pass1, email: email_usu, fone: fone_usu, sexo: sexo_uso }
+				}).done(function( msg ) {
+					alert("dados salvos");
+				});    
+		});
 	}else{
 		alert("campos obrigatórios falhos!");
 	}
