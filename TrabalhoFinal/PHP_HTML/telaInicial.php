@@ -1,5 +1,5 @@
 <?php 
-
+	session_start();
 
 
 	global $id_usuario; 
@@ -17,11 +17,30 @@
 
 			mysql_select_db($db,$conexao);
 			$table = "usuarios";
-			$select = "select id_usu from " . $table . " where nome_usu = '" . $_POST["login"] . "' and pass = '" . $_POST["pass"] . "';";
+			$select = "select id_usu from " . $table . " where email = '" . $_POST["login"] . "' and pass = '" . $_POST["pass"] . "';";
 			$consulta = mysql_query($select,$conexao);
 			$linha = mysql_fetch_row($consulta);
 			$id_usuario = (int)$linha[0];
+			$_SESSION['id_usuario_conect'] = (int)$linha[0];
 		}
+	}
+	if (isset($_POST["submit_editar_contato"])) {
+		$db = "tf";
+		$conexao = mysql_connect('localhost','root','');
+
+		if(!$conexao){
+			die('Não foi possível conectar : '.mysql_error());
+		}
+		//echo 'Conexao bem sucedida <br>';
+
+		mysql_select_db($db,$conexao);
+		$table = "contatos";
+		$select = "select id_usu_relativo from " . $table . " where id_contato = '" . $_POST["id_contato_ed"] . "';";
+		$consulta = mysql_query($select,$conexao);
+		$linha = mysql_fetch_row($consulta);
+		$id_usuario = (int)$linha[0];
+		$_SESSION['id_usuario_conect'] = (int)$linha[0];
+		
 	}
 
 ?>
@@ -47,6 +66,12 @@
 	<SCRIPT SRC="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></SCRIPT>
 	<div class = "div_corpo">
 		<!-- MENU -->
+		&emsp;
+		<a href="index132.php" onclick="">Sair</a>
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 		<div class="dropdown">
 		  <button class="dropbtn">MENU</button>
 		  <div class="dropdown-content">
@@ -120,7 +145,8 @@
 <?php
 		
 		function monta_tabela($table,$conexao){
-			$select = "Select * from ". $table . ";";
+			$select = "Select * from ". $table . " where id_usu_relativo = " . $_SESSION['id_usuario_conect'] . ";";
+			echo "<script>alert('". $select ."')</script>";
 			$consulta = mysql_query($select,$conexao);
 			while($linha = mysql_fetch_row($consulta)){
 				echo '<tr>';
@@ -137,22 +163,80 @@
 						echo $linha[6];
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="tela_alaermes.php"> <img src="../IMAGENS/note.png" height="20" width="20"> </a> ';
+						echo '<a href="telaNotas.php"> <img src="../IMAGENS/note.png" height="20" width="20"> </a> ';
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="#"> <img src="../IMAGENS/lupa.png" height="20" width="20" onclick="pegaID('. $linha[0] .')"> </a>';
+						echo '<a href="#popup2"> 
+						     <img src="../IMAGENS/lupa.png" height="20" width="20"> 
+							 <div id="popup2" class="overlay">
+								<div class="popup">
+									<h2>Visualizar Contato</h2>
+									<a class="close" href="#">&times;</a>
+									<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
+										<p>Nome*:<br><input type="text" id="nome" value="'. $linha[1] .'" disabled></p>
+										<p>Endereço*:<br><input type="text" id="ender" value="'. $linha[2] .'" disabled></p>
+										<p>Idade:<br><input type="text" id="idade" value="'. $linha[4] .'" disabled></p>
+										<p id="email1">Email*:<br><input type="text" id="email" value="'. $linha[5] .'" disabled></p>
+										<p>Telefone*:<br><input type="text" id="fone" value="'. $linha[6] .'" disabled></p>
+										<p>Sexo:</p>
+										<p>
+											Masculino<input type="radio" id="sexo" value="M" '. ($linha[3]=='M'?"checked":"") .' disabled>
+											Feminino<input type="radio" id="sexo" value="F" '. ($linha[3]=='F'?"checked":"") .' disabled>
+											Outro<input type="radio" id="sexo" value="O" '. ($linha[3]=='O'?"checked":"") .' disabled>
+										</p>
+										<input type="text" name="id_ed" id="id" value="'. $GLOBALS['id_usuario'] .'" hidden>
+										<input type="text" name="id_contato_ed" id="id" value="'. $linha[0] .'" hidden>
+										<p>
+											<a href="#" class="buttom_cancelar">Cancelar</a>
+											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+										</p>
+								  </form>
+								</div>
+							</div>
+							 </a>';
 					echo '</td>';
 					echo '<td>';
 						echo '<a href="tela_alaermes.php"> <img src="../IMAGENS/bell.png" height="20" width="20"> </a> ';
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="editar_contato.php"> <img src="../IMAGENS/pencil.png" height="20" width="20"> </a>';
+						echo '<a href="#popup3"> 
+						     <img src="../IMAGENS/pencil.png" height="20" width="20"> 
+							 <div id="popup3" class="overlay">
+								<div class="popup">
+									<h2>Editar Contato</h2>
+									<a class="close" href="#">&times;</a>
+									<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
+										<p>Nome*:<br><input type="text" name="nome_ed" id="nome" value="'. $linha[1] .'"></p>
+										<p>Endereço*:<br><input type="text" name="ender_ed" id="ender" value="'. $linha[2] .'"></p>
+										<p>Idade:<br><input type="text" name="idade_ed" id="idade" value="'. $linha[4] .'"></p>
+										<p id="email1">Email*:<br><input type="text" name="email_ed" id="email" onblur="is_email()" value="'. $linha[5] .'"></p>
+										<p>Telefone*:<br><input type="text" name="fone_ed" id="fone" value="'. $linha[6] .'"></p>
+										<p>Sexo:</p>
+										<p>
+											Masculino<input type="radio" name="sexo_ed" id="sexo" '. ($linha[3]=='M'?"checked":"") .'  value="M">
+											Feminino<input type="radio" name="sexo_ed" id="sexo" '. ($linha[3]=='F'?"checked":"") .'  value="F">
+											Outro<input type="radio" name="sexo_ed" id="sexo" '. ($linha[3]=='O'?"checked":"") .'  value="O">
+										</p>
+										<input type="text" name="id_ed" id="id" value="'. $GLOBALS['id_usuario'] .'" hidden>
+										<input type="text" name="id_contato_ed" id="id" value="'. $linha[0] .'" hidden>
+										<p>
+											<a href="#" class="buttom_cancelar">Cancelar</a>
+											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+								 			<button id="btConfirmar" name="submit_editar_contato" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
+										</p>
+								  </form>
+								</div>
+							</div>
+							 </a>';
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="" onclick=""> <img src="../IMAGENS/delet.png" height="20" width="20"> </a> ';
+						echo '<a href="#"> <img src="../IMAGENS/delet.png" height="20" width="20"> </a> ';
 					echo '</td>';
 				echo '</tr>';
 			}
+		}
 			
 			function deletar($id){
 				$db = "tf";
@@ -214,7 +298,28 @@
 					$consulta = mysql_query($insert,$conexao);
 				}
 			}
-		};
+			//UPDATE CONTATO
+			if (isset($_POST["submit_editar_contato"])) {
+				if( $_POST["nome_ed"] != "" && $_POST["ender_ed"] != "" && $_POST["email_ed"] != "" && $_POST["fone_ed"] != "" && $_POST["id_ed"] != ""){
+					
+					$db = "tf";
+					$conexao = mysql_connect('localhost','root','');
+
+					if(!$conexao){
+						die('Não foi possível conectar : '.mysql_error());
+					}
+					//echo 'Conexao bem sucedida <br>';
+
+					mysql_select_db($db,$conexao);
+					
+					$table = "contatos";
+					
+					$update = "update ". $table . " set nome_usu = '". $_POST["nome_ed"] ."', end = '". $_POST["ender_ed"] ."', sexo = '". $_POST["sexo_ed"] ."', idade = '". $_POST["idade_ed"] ."', email = '". $_POST["email_ed"] ."', telefone = '". $_POST["fone_ed"] ."' where id_contato = '".  $_POST["id_contato_ed"] ."';";
+					
+					$consulta = mysql_query($update,$conexao);
+				}
+			}
+		
 		
 		//$insert = "insert into ". $table . $campos . " values ('Marvin','Talvez seja util');";
 		//$update = "update ". $table . " set nome = 'Marvin Graycastle' where nome = 'Marvin';";

@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php 
+	session_start();
+	echo '<script>alert("'. $_SESSION['id_usuario_conect'] .'")</script>'
+?>
 <html>
 
   <head>
@@ -7,6 +11,9 @@
     <link rel="stylesheet" type="text/css" href="../CSS/css_telainicial.css" title="Default Styles" media="screen">
     <link rel="stylesheet" type="text/css" href="../CSS/css_buttons.css" title="Default Styles" media="screen">
     <link rel="stylesheet" type="text/css" href="../CSS/css_tables.css" title="Default Styles" media="screen">
+    <link rel="stylesheet" type="text/css" href="../CSS/css_popup.css" title="Default Styles" media="screen">
+    <link rel="stylesheet" type="text/css" href="../CSS/css_teste.css" title="Default Styles" media="screen">
+    <link rel="stylesheet" type="text/css" href="../CSS/css_padrao.css" title="Default Styles" media="screen">
     <!-- <link rel="stylesheet" type="text/css" href="../CSS/css_imagens.css" title="Default Styles" media="screen"> -->
   </head>
   
@@ -16,6 +23,12 @@
 	<SCRIPT SRC="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></SCRIPT>
 	<div class = "div_corpo">
 		<!-- MENU -->
+		&emsp;
+		<a href="index132.php" onclick="">Sair</a>
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 		<div class="dropdown">
 		  <button class="dropbtn">MENU</button>
 		  <div class="dropdown-content">
@@ -35,7 +48,35 @@
 					<th>  </th>
 					<th>  </th>
 					<th>  </th>
-					<th>  <a href="#"> <button style="border-radius: 5px;">+</button> </a> </th>
+					<th> 
+						<a class="button" href="#popup1">+</a>
+						<div id="popup1" class="overlay">
+							<div class="popup">
+								<h2>Cadastrar Nova Nota</h2>
+								<a class="close" href="#">&times;</a>
+								<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
+									<p>Nome*:<br><input type="text" name="nome" id="nome" value=""></p>
+									<p>Endereço*:<br><input type="text" name="ender" id="ender" value=""></p>
+									<p>Idade:<br><input type="text" name="idade" id="idade" value=""></p>
+									<p id="email1">Email*:<br><input type="text" name="email" id="email" onblur="is_email()"></p>
+									<p>Telefone*:<br><input type="text" name="fone" id="fone" value=""></p>
+									<p>Sexo:</p>
+									<p>
+										Masculino<input type="radio" name="sexo" id="sexo" value="M">
+										Feminino<input type="radio" name="sexo" id="sexo" value="F">
+										Outro<input type="radio" name="sexo" id="sexo" value="O">
+									</p>
+									<input type="text" name="id" id="id" value="<?php echo $GLOBALS['id_usuario'] ?>" hidden>
+									<p>
+										<a href="#" class="buttom_cancelar">Cancelar</a>
+										&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+										&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+							 			<button id="btConfirmar" name="submit_contato_novo" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
+									</p>
+							  </form>
+							</div>
+						</div>
+					</th>
 				<tr>
 				<?php
 					$db = "tf";
@@ -58,7 +99,8 @@
 </html>
 <?php
 		function monta_tabela($table,$conexao){
-			$select = "Select * from ". $table . ";";
+			$select = "Select * from ". $table . " where id_usu = ". $_SESSION['id_usuario_conect'] .";";
+			echo "<script>alert('". $select ."')</script>";
 			$consulta = mysql_query($select,$conexao);
 			while($linha = mysql_fetch_row($consulta)){
 				echo '<tr>';
@@ -88,6 +130,7 @@
 					echo '</td>';
 				echo '</tr>';
 			}
+		}
 			function deletar(){
 				
 			}
@@ -113,7 +156,7 @@
 				
 				return $a;
 			}
-		};
+		
 		
 		//$insert = "insert into ". $table . $campos . " values ('Marvin','Talvez seja util');";
 		//$update = "update ". $table . " set nome = 'Marvin Graycastle' where nome = 'Marvin';";
