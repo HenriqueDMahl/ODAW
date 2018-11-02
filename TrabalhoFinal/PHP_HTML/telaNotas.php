@@ -154,7 +154,7 @@
 										<p>Titulo*:<br><input type="text" id="titulo" value="'. $linha[1] .'" disabled></p>
 										<p>Conteudo:<br><textarea rows="4" cols="50" name="comment" form="form_notas_visual" disabled>'. $linha[2] .'</textarea></p>
 										<p>Remetente*:<br><input type="text" id="idade" value="'. getRemetente($linha[4]) .'" disabled></p>
-										<p>Grupo:<br><input type="text" id="email" value="'. $linha[5] .'" disabled></p>
+										<p>Grupo:<br><input type="text" id="email" value="'. getGrupo($linha[5]) .'" disabled></p>
 										<p>
 											<a href="#" class="buttom_cancelar">Cancelar</a>
 										</p>
@@ -178,7 +178,7 @@
 										<p>Conteudo:<br><textarea rows="4" cols="50" name="conteudo_ed" form="form_notas_visual">'. $linha[2] .'</textarea></p>
 										<p>Remetente*:<br><input type="text" id="idade" value="'. getRemetente($linha[4]) .'" disabled></p>
 										<p>Grupo:<br><input type="text" id="email" value="'. $linha[5] .'" disabled></p>
-										<input type="text" name="id_nota_ed" id="id_nota_ed" value="'. $linha[0] .'" hidden>
+										<input type="text" name="id_nota_ed" id="id_nota_ed" value="'. getGrupo($linha[0]) .'" hidden>
 										<p>
 											<a href="#" class="buttom_cancelar">Cancelar</a>
 											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -216,6 +216,23 @@
 				mysql_select_db($db,$conexao);
 				$table = "contatos";
 				$select = "select nome_usu from ". $table . " where id_contato = ". $id_rementete .";";
+				$consulta = mysql_query($select,$conexao);
+				$linha = mysql_fetch_row($consulta);
+				return $linha[0];
+			}
+			
+			function getGrupo($id_grupo){
+				$db = "tf";
+				$conexao = mysql_connect('localhost','root','');
+
+				if(!$conexao){
+					die('Não foi possível conectar : '.mysql_error());
+				}
+				//echo 'Conexao bem sucedida <br>';
+
+				mysql_select_db($db,$conexao);
+				$table = "grupos";
+				$select = "select nome_grup from ". $table . " where id_gru = ". $id_grupo .";";
 				$consulta = mysql_query($select,$conexao);
 				$linha = mysql_fetch_row($consulta);
 				return $linha[0];
