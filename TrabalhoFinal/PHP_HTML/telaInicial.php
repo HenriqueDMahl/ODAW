@@ -61,7 +61,6 @@
   
   <body style="background-color: rgb(135,206,235);">
 	<script src="../JAVASCRIPT/javascript.js"></script>
-	<script src="../JAVASCRIPT/operacoes_tabela.js"></script>
 	<script src="../JAVASCRIPT/popup.js"></script>
 	<SCRIPT SRC="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></SCRIPT>
 	<div class = "div_corpo">
@@ -77,7 +76,7 @@
 		  <div class="dropdown-content">
 			<a href="#">Lista Grupos</a>
 			<a href="telaNotas.php">Lista Notas</a>
-			<a href="#">Lista Alarmes</a>
+			<a href="telaAlarme.php">Lista Alarmes</a>
 		  </div>
 		</div>
 	    <!-- Placeholder -->
@@ -232,50 +231,19 @@
 							 </a>';
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="#"> <img src="../IMAGENS/delet.png" height="20" width="20"> </a> ';
+						echo '<a href="#"> 
+								<form action="../PHP_HTML/telaInicial.php" method="POST"> 
+									<button name="submit_deletar_contato" type="submit"> 
+										<img src="../IMAGENS/delet.png" height="20" width="20">
+									</button> 
+									<input type="text" name="id_del" id="id" value="'. $GLOBALS['id_usuario'] .'" hidden>
+									<input type="text" name="id_contato_del" id="id" value="'. $linha[0] .'" hidden>
+								</form> 
+							   </a> ';
 					echo '</td>';
 				echo '</tr>';
 			}
 		}
-			
-			function deletar($id){
-				$db = "tf";
-				$table = "usuarios";
-				$conexao = mysql_connect('localhost','root','');
-				$a = array();
-				
-				if(!$conexao){
-					die('Não foi possível conectar : '.mysql_error());
-				}
-				mysql_select_db($db,$conexao);
-				
-				$deletar = "Delete from ". $table . " where id_usu = ". $id;
-				$consulta = mysql_query($deletar,$conexao);
-				
-			}
-			
-			function select($id){
-
-				$db = "tf";
-				$table = "usuarios";
-				$conexao = mysql_connect('localhost','root','');
-				$a = array();
-				
-				if(!$conexao){
-					die('Não foi possível conectar : '.mysql_error());
-				}
-				//echo 'Conexao bem sucedida <br>';
-
-				mysql_select_db($db,$conexao);
-				$select = "Select * from ". $table . " where id_usu = ". $id .";";
-				$consulta = mysql_query($select,$conexao);
-				while($linha = mysql_fetch_row($consulta)){
-					array_push($a,$linha[0],$linha[1],$linha[2],$linha[3],$linha[4],$linha[5],$linha[6],$linha[7],$linha[8]);
-				}
-				
-				return $a;
-			}
-			
 			//INSERE NOVO CONTATO
 			if (isset($_POST["submit_contato_novo"])) {
 				if( $_POST["nome"] != "" && $_POST["ender"] != "" && $_POST["email"] != "" && $_POST["fone"] != "" && $_POST["id"] != ""){
@@ -296,6 +264,7 @@
 					$insert = "insert into ". $table . $campos . " values ('". $_POST["nome"] ."','". $_POST["ender"] . "','". $_POST["sexo"] ."','". $_POST["idade"] ."','". $_POST["email"] ."','". $_POST["fone"] ."','". $_POST["id"] ."');";
 					
 					$consulta = mysql_query($insert,$conexao);
+					echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
 				}
 			}
 			//UPDATE CONTATO
@@ -317,7 +286,26 @@
 					$update = "update ". $table . " set nome_usu = '". $_POST["nome_ed"] ."', end = '". $_POST["ender_ed"] ."', sexo = '". $_POST["sexo_ed"] ."', idade = '". $_POST["idade_ed"] ."', email = '". $_POST["email_ed"] ."', telefone = '". $_POST["fone_ed"] ."' where id_contato = '".  $_POST["id_contato_ed"] ."';";
 					
 					$consulta = mysql_query($update,$conexao);
+					 echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
 				}
+			}
+			
+			//DELETE CONTATO
+			if (isset($_POST["submit_deletar_contato"])){
+				
+				$db = "tf";
+				$table = "contatos";
+				$conexao = mysql_connect('localhost','root','');
+				$a = array();
+				
+				if(!$conexao){
+					die('Não foi possível conectar : '.mysql_error());
+				}
+				mysql_select_db($db,$conexao);
+				
+				$deletar = "Delete from ". $table . " where id_contato = ". $_POST["id_contato_del"];
+				$consulta = mysql_query($deletar,$conexao);
+				echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
 			}
 		
 		

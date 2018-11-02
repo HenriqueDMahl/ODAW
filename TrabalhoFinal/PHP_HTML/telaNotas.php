@@ -19,7 +19,6 @@
   
   <body style="background-color: rgb(135,206,235);">
 	<script src="../JAVASCRIPT/javascript.js"></script>
-	<script src="../JAVASCRIPT/operacoes_tabela.js"></script>
 	<SCRIPT SRC="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></SCRIPT>
 	<div class = "div_corpo">
 		<!-- MENU -->
