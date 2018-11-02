@@ -233,9 +233,13 @@
 				mysql_select_db($db,$conexao);
 				$table = "grupos";
 				$select = "select nome_grup from ". $table . " where id_gru = ". $id_grupo .";";
-				$consulta = mysql_query($select,$conexao);
-				$linha = mysql_fetch_row($consulta);
-				return $linha[0];
+				if($id_grupo != ""){
+					$consulta = mysql_query($select,$conexao);
+					$linha = mysql_fetch_row($consulta);
+					return $linha[0];
+				}else{
+					return "";
+				}
 			}
 		
 			//INSERE NOVO NOTA
