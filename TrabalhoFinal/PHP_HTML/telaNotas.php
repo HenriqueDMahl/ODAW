@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php 
 	session_start();
-	echo '<script>alert("'. $_SESSION['id_usuario_conect'] .'")</script>'
+	//echo '<script>alert("'. $_SESSION['id_usuario_conect'] .'")</script>'
 ?>
 <html>
 
@@ -48,49 +48,34 @@
 					<th>  </th>
 					<th>  </th>
 					<th>  </th>
+					<th>  </th>
 					<th> 
 						<a class="button" href="#popup1">+</a>
 						<div id="popup1" class="overlay">
 							<div class="popup">
 								<h2>Cadastrar Nova Nota</h2>
 								<a class="close" href="#">&times;</a>
-								<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
-									<p>Nome*:<br><input type="text" name="nome" id="nome" value=""></p>
-									<p>Endereço*:<br><input type="text" name="ender" id="ender" value=""></p>
-									<p>Idade:<br><input type="text" name="idade" id="idade" value=""></p>
-									<p id="email1">Email*:<br><input type="text" name="email" id="email" onblur="is_email()"></p>
-									<p>Telefone*:<br><input type="text" name="fone" id="fone" value=""></p>
-									<p>Sexo:</p>
-									<p>
-										Masculino<input type="radio" name="sexo" id="sexo" value="M">
-										Feminino<input type="radio" name="sexo" id="sexo" value="F">
-										Outro<input type="radio" name="sexo" id="sexo" value="O">
+								<form id="form_notas" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
+									<p>Titulo*:<br><input type="text" name="titulo" id="nome" value=""></p>
+									<p>Conteudo:<br><textarea rows="4" cols="50" name="conteudo" form="form_notas"></textarea></p>
+									<p>Remetente*:<br>
+									<?php monta_combobox("contatos","id_contato,nome_usu",1) ?>
 									</p>
-									<input type="text" name="id" id="id" value="<?php echo $GLOBALS['id_usuario'] ?>" hidden>
+									<p>Grupo:<br>
+									<?php monta_combobox("grupos","id_gru,nome_grup",0) ?>
+									</p>
 									<p>
 										<a href="#" class="buttom_cancelar">Cancelar</a>
 										&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 										&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-							 			<button id="btConfirmar" name="submit_contato_novo" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
+							 			<button id="btConfirmar" name="submit_nota_novo" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
 									</p>
 							  </form>
 							</div>
 						</div>
 					</th>
 				<tr>
-				<?php
-					$db = "tf";
-					$conexao = mysql_connect('localhost','root','');
-					
-					if(!$conexao){
-						die('Não foi possível conectar : '.mysql_error());
-					}
-					//echo 'Conexao bem sucedida <br>';
-
-					mysql_select_db($db,$conexao);
-					
-					monta_tabela("notas",$conexao); 
-				?>
+				<?php monta_tabela("notas"); ?>
 			</table>
 		</div>
 	</div>
@@ -98,8 +83,48 @@
   </body>
 </html>
 <?php
-		function monta_tabela($table,$conexao){
-			$select = "Select * from ". $table . " where id_usu = ". $_SESSION['id_usuario_conect'] .";";
+	
+		function monta_combobox($table,$campos,$flag){
+			$db = "tf";
+			$conexao = mysql_connect('localhost','root','');
+			
+			if(!$conexao){
+				die('Não foi possível conectar : '.mysql_error());
+			}
+			mysql_select_db($db,$conexao);
+			
+			$select = "";
+			if($flag == 1){
+				echo '<select name = "select_contato">';
+				$select = "select ". $campos ." from ". $table ." where id_usu_relativo = " . $_SESSION['id_usuario_conect'] . ";";
+			}else{
+				echo '<select name = "select_grupo">';
+				$select = "select ". $campos ." from ". $table .";";
+			}
+			$consulta = mysql_query($select,$conexao);
+			
+			echo '<option value="null"></option>';
+			while($linha = mysql_fetch_row($consulta)){
+				echo '<option value="'. $linha[0] .'">';
+					echo $linha[1];
+				echo '</option>';
+			}
+			echo '</select>';
+
+		}
+
+
+		function monta_tabela($table){
+			$db = "tf";
+			$conexao = mysql_connect('localhost','root','');
+			
+			if(!$conexao){
+				die('Não foi possível conectar : '.mysql_error());
+			}
+			//echo 'Conexao bem sucedida <br>';
+
+			mysql_select_db($db,$conexao);
+			$select = "Select * from ". $table . " where id_usu_autor = " . $_SESSION['id_usuario_conect'] . ";";
 			echo "<script>alert('". $select ."')</script>";
 			$consulta = mysql_query($select,$conexao);
 			while($linha = mysql_fetch_row($consulta)){
@@ -107,54 +132,158 @@
 					echo '<td name="id">';
 						echo $linha[0];
 					echo '</td>';
-					echo '<td name="nome">';
+					echo '<td name="titulo">';
 						echo $linha[1];
 					echo '</td>';
 					echo '<td>';
-						echo $linha[4];
+						echo getRemetente($linha[4]);
 					echo '</td>';
 					echo '<td>';
 						echo $linha[5];
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="#"> <img src="../IMAGENS/lupa.png" height="20" width="20" onclick="pegaID('. $linha[0] .')"> </a>';
+						echo '<a href="telaNotas.php"> <img src="../IMAGENS/note.png" height="20" width="20"> </a> ';
+					echo '</td>';
+					echo '<td>';
+						echo '<a href="#popup2"> 
+						     <img src="../IMAGENS/lupa.png" height="20" width="20"> 
+							 <div id="popup2" class="overlay">
+								<div class="popup">
+									<h2>Visualizar Contato</h2>
+									<a class="close" href="#">&times;</a>
+									<form id="form_notas_visual" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
+										<p>Titulo*:<br><input type="text" id="titulo" value="'. $linha[1] .'" disabled></p>
+										<p>Conteudo:<br><textarea rows="4" cols="50" name="comment" form="form_notas_visual" disabled>'. $linha[2] .'</textarea></p>
+										<p>Remetente*:<br><input type="text" id="idade" value="'. getRemetente($linha[4]) .'" disabled></p>
+										<p>Grupo:<br><input type="text" id="email" value="'. $linha[5] .'" disabled></p>
+										<p>
+											<a href="#" class="buttom_cancelar">Cancelar</a>
+										</p>
+								  </form>
+								</div>
+							</div>
+							 </a>';
 					echo '</td>';
 					echo '<td>';
 						echo '<a href="tela_alaermes.php"> <img src="../IMAGENS/bell.png" height="20" width="20"> </a> ';
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="editar_contato.php"> <img src="../IMAGENS/pencil.png" height="20" width="20"> </a>';
+						echo '<a href="#popup3"> 
+						     <img src="../IMAGENS/pencil.png" height="20" width="20"> 
+							 <div id="popup3" class="overlay">
+								<div class="popup">
+									<h2>Editar Contato</h2>
+									<a class="close" href="#">&times;</a>
+									<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
+										<p>Titulo*:<br><input type="text" id="titulo" value="'. $linha[1] .'"></p>
+										<p>Conteudo:<br><textarea rows="4" cols="50" name="comment" form="form_notas_visual">'. $linha[2] .'</textarea></p>
+										<p>Remetente*:<br><input type="text" id="idade" value="'. getRemetente($linha[4]) .'" disabled></p>
+										<p>Grupo:<br><input type="text" id="email" value="'. $linha[5] .'" disabled></p>
+										<input type="text" name="id_contato_ed" id="id_nota_ed" value="'. $linha[0] .'" hidden>
+										<p>
+											<a href="#" class="buttom_cancelar">Cancelar</a>
+											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+								 			<button id="btConfirmar" name="submit_editar_nota" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
+										</p>
+								  </form>
+								</div>
+							</div>
+							 </a>';
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="" onclick=""> <img src="../IMAGENS/delet.png" height="20" width="20"> </a> ';
+						echo '<a href="#"> 
+								<form action="../PHP_HTML/telaInicial.php" method="POST"> 
+									<button name="submit_delete_nota" type="submit"> 
+										<img src="../IMAGENS/delet.png" height="20" width="20">
+									</button> 
+									<input type="text" name="id_nota_del" id="id" value="'. $linha[0] .'" hidden>
+								</form> 
+							   </a> ';
 					echo '</td>';
 				echo '</tr>';
 			}
 		}
-			function deletar(){
-				
-			}
-			
-			function select($id){
-
+		
+			function getRemetente($id_rementete){
 				$db = "tf";
-				$table = "usuarios";
 				$conexao = mysql_connect('localhost','root','');
-				$a = array();
-				
+
 				if(!$conexao){
 					die('Não foi possível conectar : '.mysql_error());
 				}
 				//echo 'Conexao bem sucedida <br>';
 
 				mysql_select_db($db,$conexao);
-				$select = "Select * from ". $table . " where id_usu = ". $id .";";
+				$table = "contatos";
+				$select = "select nome_usu from ". $table . " where id_contato = ". $id_rementete .";";
 				$consulta = mysql_query($select,$conexao);
-				while($linha = mysql_fetch_row($consulta)){
-					array_push($a,$linha[0],$linha[1],$linha[2],$linha[3],$linha[4],$linha[5],$linha[6],$linha[7],$linha[8]);
+				$linha = mysql_fetch_row($consulta);
+				return $linha[0];
+			}
+		
+			//INSERE NOVO CONTATO
+			if (isset($_POST["submit_nota_novo"])) {
+				if( $_POST["titulo"] != "" && $_POST["select_contato"] != "null"){
+					
+					$db = "tf";
+					$conexao = mysql_connect('localhost','root','');
+
+					if(!$conexao){
+						die('Não foi possível conectar : '.mysql_error());
+					}
+					//echo 'Conexao bem sucedida <br>';
+
+					mysql_select_db($db,$conexao);
+					
+					$table = "notas";
+					$campos = "(titulo,conteudo,id_usu_autor,id_usu_alvo,id_gru)";
+					
+					$insert = "insert into ". $table . $campos . " values ('". $_POST["titulo"] ."','". $_POST["conteudo"] . "','". $_SESSION['id_usuario_conect'] ."','". $_POST["select_contato"] ."','". $_POST["select_grupo"] ."');";
+					
+					$consulta = mysql_query($insert,$conexao);
+					echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
 				}
+			}
+			//UPDATE CONTATO
+			if (isset($_POST["submit_editar_nota"])) {
+				if( $_POST["titulo"] != ""){
+					
+					$db = "tf";
+					$conexao = mysql_connect('localhost','root','');
+
+					if(!$conexao){
+						die('Não foi possível conectar : '.mysql_error());
+					}
+					//echo 'Conexao bem sucedida <br>';
+
+					mysql_select_db($db,$conexao);
+					
+					$table = "notas";
+					
+					$update = "update ". $table . " set titulo = '". $_POST["titulo"] ."', conteudo = '". $_POST["conteudo"] ." where id_nota = '".  $_POST["id_nota_ed"] ."';";
+					
+					$consulta = mysql_query($update,$conexao);
+					 echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaNotas.php'>";
+				}
+			}
+			
+			//DELETE CONTATO
+			if (isset($_POST["submit_delete_nota"])){
 				
-				return $a;
+				$db = "tf";
+				$table = "notas";
+				$conexao = mysql_connect('localhost','root','');
+				$a = array();
+				
+				if(!$conexao){
+					die('Não foi possível conectar : '.mysql_error());
+				}
+				mysql_select_db($db,$conexao);
+				
+				$deletar = "Delete from ". $table . " where id_nota = ". $_POST["id_nota_del"];
+				$consulta = mysql_query($deletar,$conexao);
+				echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
 			}
 		
 		
