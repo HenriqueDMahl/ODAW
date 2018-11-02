@@ -42,9 +42,8 @@
 			<table>
 				<tr>
 					<th> ID </th>
-					<th> Titulo </th>
-					<th> Remetentes </th>
-					<th> Grupo </th>
+					<th> Nome </th>
+					<th> Data e Hora </th>
 					<th>  </th>
 					<th>  </th>
 					<th>  </th>
@@ -56,26 +55,21 @@
 								<h2>Cadastrar Nova Nota</h2>
 								<a class="close" href="#">&times;</a>
 								<form id="form_notas" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
-									<p>Titulo*:<br><input type="text" name="titulo" id="nome" value=""></p>
-									<p>Conteudo:<br><textarea rows="4" cols="50" name="conteudo" form="form_notas"></textarea></p>
-									<p>Remetente*:<br>
-									<?php monta_combobox("contatos","id_contato,nome_usu",1) ?>
-									</p>
-									<p>Grupo:<br>
-									<?php monta_combobox("grupos","id_gru,nome_grup",0) ?>
-									</p>
+									<p>Nome*:<br><input type="text" name="nome" id="nome" value=""></p>
+									<p>Data/Hora*:<br><input type="text" name="data" value=""></p>
+									<p>Lembrete:<br><textarea rows="4" cols="50" name="lembrete" form="form_notas"></textarea></p>
 									<p>
 										<a href="#" class="buttom_cancelar">Cancelar</a>
 										&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 										&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-							 			<button id="btConfirmar" name="submit_nota_novo" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
+							 			<button id="btConfirmar" name="submit_alarme_novo" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
 									</p>
 							  </form>
 							</div>
 						</div>
 					</th>
 				<tr>
-				<?php monta_tabela("notas"); ?>
+				<?php monta_tabela("alarmes"); ?>
 			</table>
 		</div>
 	</div>
@@ -83,7 +77,7 @@
   </body>
 </html>
 <?php
-	
+	/*
 		function monta_combobox($table,$campos,$flag){
 			$db = "tf";
 			$conexao = mysql_connect('localhost','root','');
@@ -111,7 +105,7 @@
 			}
 			echo '</select>';
 
-		}
+		}*/
 
 
 		function monta_tabela($table){
@@ -124,7 +118,7 @@
 			//echo 'Conexao bem sucedida <br>';
 
 			mysql_select_db($db,$conexao);
-			$select = "Select * from ". $table . " where id_usu_autor = " . $_SESSION['id_usuario_conect'] . ";";
+			$select = "Select * from ". $table . " where id_usu = " . $_SESSION['id_usuario_conect'] . ";";
 			echo "<script>alert('". $select ."')</script>";
 			$consulta = mysql_query($select,$conexao);
 			while($linha = mysql_fetch_row($consulta)){
@@ -136,10 +130,7 @@
 						echo $linha[1];
 					echo '</td>';
 					echo '<td>';
-						echo getRemetente($linha[4]);
-					echo '</td>';
-					echo '<td>';
-						echo $linha[5];
+						echo $linha[2];
 					echo '</td>';
 					echo '<td>';
 						echo '<a href="telaNotas.php"> <img src="../IMAGENS/note.png" height="20" width="20"> </a> ';
@@ -152,10 +143,9 @@
 									<h2>Visualizar Contato</h2>
 									<a class="close" href="#">&times;</a>
 									<form id="form_notas_visual" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
-										<p>Titulo*:<br><input type="text" id="titulo" value="'. $linha[1] .'" disabled></p>
-										<p>Conteudo:<br><textarea rows="4" cols="50" name="comment" form="form_notas_visual" disabled>'. $linha[2] .'</textarea></p>
-										<p>Remetente*:<br><input type="text" id="idade" value="'. getRemetente($linha[4]) .'" disabled></p>
-										<p>Grupo:<br><input type="text" id="email" value="'. $linha[5] .'" disabled></p>
+										<p>Nome*:<br><input type="text" id="titulo" value="'. $linha[1] .'" disabled></p>
+										<p>Data/Hora*:<br><input type="text" id="idade" value="'. $linha[3] .'" disabled></p>
+										<p>Lembrete:<br><textarea rows="4" cols="50" name="comment" form="form_notas_visual" disabled>'. $linha[2] .'</textarea></p>
 										<p>
 											<a href="#" class="buttom_cancelar">Cancelar</a>
 										</p>
@@ -165,7 +155,7 @@
 							 </a>';
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="telaAlarme.php"> <img src="../IMAGENS/bell.png" height="20" width="20"> </a> ';
+						echo '<a href="tela_alaermes.php"> <img src="../IMAGENS/bell.png" height="20" width="20"> </a> ';
 					echo '</td>';
 					echo '<td>';
 						echo '<a href="#popup3"> 
@@ -175,16 +165,15 @@
 									<h2>Editar Contato</h2>
 									<a class="close" href="#">&times;</a>
 									<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
-										<p>Titulo*:<br><input type="text" nome="titulo_ed" id="titulo" value="'. $linha[1] .'"></p>
-										<p>Conteudo:<br><textarea rows="4" cols="50" name="conteudo_ed" form="form_notas_visual">'. $linha[2] .'</textarea></p>
-										<p>Remetente*:<br><input type="text" id="idade" value="'. getRemetente($linha[4]) .'" disabled></p>
-										<p>Grupo:<br><input type="text" id="email" value="'. $linha[5] .'" disabled></p>
-										<input type="text" name="id_nota_ed" id="id_nota_ed" value="'. $linha[0] .'" hidden>
+										<p>Nome*:<br><input type="text" name="nome_ed" id="titulo" value="'. $linha[1] .'"></p>
+										<p>Data/Hora*:<br><input type="text" name="data_ed" id="idade" value="'. $linha[3] .'"></p>
+										<p>Lembrete:<br><textarea rows="4" cols="50" name="lembrete_ed" form="form_notas_visual">'. $linha[2] .'</textarea></p>
+										<input type="text" name="id_alarme_ed" id="id_alarme_ed" value="'. $linha[0] .'" hidden>
 										<p>
 											<a href="#" class="buttom_cancelar">Cancelar</a>
 											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-								 			<button id="btConfirmar" name="submit_editar_nota" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
+								 			<button id="btConfirmar" name="submit_editar_alarme" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
 										</p>
 								  </form>
 								</div>
@@ -194,17 +183,17 @@
 					echo '<td>';
 						echo '<a href="#"> 
 								<form action="../PHP_HTML/telaInicial.php" method="POST"> 
-									<button name="submit_delete_nota" type="submit"> 
+									<button name="submit_delete_alarme" type="submit"> 
 										<img src="../IMAGENS/delet.png" height="20" width="20">
 									</button> 
-									<input type="text" name="id_nota_del" id="id" value="'. $linha[0] .'" hidden>
+									<input type="text" name="id_alarme_del" id="id" value="'. $linha[0] .'" hidden>
 								</form> 
 							   </a> ';
 					echo '</td>';
 				echo '</tr>';
 			}
 		}
-		
+			/*
 			function getRemetente($id_rementete){
 				$db = "tf";
 				$conexao = mysql_connect('localhost','root','');
@@ -220,11 +209,11 @@
 				$consulta = mysql_query($select,$conexao);
 				$linha = mysql_fetch_row($consulta);
 				return $linha[0];
-			}
+			}*/
 		
-			//INSERE NOVO NOTA
-			if (isset($_POST["submit_nota_novo"])) {
-				if( $_POST["titulo"] != "" && $_POST["select_contato"] != "null"){
+			//INSERE NOVO ALARME
+			if (isset($_POST["submit_alarme_novo"])) {
+				if( $_POST["nome"] != "" && $_POST["data/hora"] != ""){
 					
 					$db = "tf";
 					$conexao = mysql_connect('localhost','root','');
@@ -236,18 +225,18 @@
 
 					mysql_select_db($db,$conexao);
 					
-					$table = "notas";
-					$campos = "(titulo,conteudo,id_usu_autor,id_usu_alvo,id_gru)";
+					$table = "alarmes";
+					$campos = "(nome_ala,data_hora_ala,lembrete,id_usu)";
 					
-					$insert = "insert into ". $table . $campos . " values ('". $_POST["titulo"] ."','". $_POST["conteudo"] . "','". $_SESSION['id_usuario_conect'] ."','". $_POST["select_contato"] ."','". $_POST["select_grupo"] ."');";
+					$insert = "insert into ". $table . $campos . " values ('". $_POST["nome"] ."','". $_POST["data"] . "','". $_POST["lembrete"] ."','". $_SESSION['id_usuario_conect'] ."');";
 					
 					$consulta = mysql_query($insert,$conexao);
 					echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
 				}
 			}
-			//UPDATE NOTA
-			if (isset($_POST["submit_editar_nota"])) {
-				if( $_POST["titulo"] != ""){
+			//UPDATE ALARME
+			if (isset($_POST["submit_editar_alarme"])) {
+				if( $_POST["titulo"] != "" && $_POST["data_ed"] != ""){
 					
 					$db = "tf";
 					$conexao = mysql_connect('localhost','root','');
@@ -259,20 +248,20 @@
 
 					mysql_select_db($db,$conexao);
 					
-					$table = "notas";
+					$table = "alarmes";
 					
-					$update = "update ". $table . " set titulo = '". $_POST["titulo_ed"] ."', conteudo = '". $_POST["conteudo_ed"] ." where id_nota = '".  $_POST["id_nota_ed"] ."';";
+					$update = "update ". $table . " set nome_ala = '". $_POST["nome_ed"] ."', data_hora_ala = '". $_POST["data_ed"] .", lembrete". $_POST["lembrete_ed"] ." where id_ala = '".  $_POST["id_alarme_ed"] ."';";
 					
 					$consulta = mysql_query($update,$conexao);
 					 echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaNotas.php'>";
 				}
 			}
 			
-			//DELETE NOTA
-			if (isset($_POST["submit_delete_nota"])){
+			//DELETE ALARME
+			if (isset($_POST["submit_delete_alarme"])){
 				
 				$db = "tf";
-				$table = "notas";
+				$table = "alarmes";
 				$conexao = mysql_connect('localhost','root','');
 				$a = array();
 				
@@ -281,7 +270,7 @@
 				}
 				mysql_select_db($db,$conexao);
 				
-				$deletar = "Delete from ". $table . " where id_nota = ". $_POST["id_nota_del"];
+				$deletar = "Delete from ". $table . " where id_ala = ". $_POST["id_alarme_del"];
 				$consulta = mysql_query($deletar,$conexao);
 				echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
 			}
