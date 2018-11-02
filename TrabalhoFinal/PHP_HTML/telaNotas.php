@@ -149,7 +149,7 @@
 						     <img src="../IMAGENS/lupa.png" height="20" width="20"> 
 							 <div id="popup2" class="overlay">
 								<div class="popup">
-									<h2>Visualizar Contato</h2>
+									<h2>Visualizar Nota</h2>
 									<a class="close" href="#">&times;</a>
 									<form id="form_notas_visual" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
 										<p>Titulo*:<br><input type="text" id="titulo" value="'. $linha[1] .'" disabled></p>
@@ -172,7 +172,7 @@
 						     <img src="../IMAGENS/pencil.png" height="20" width="20"> 
 							 <div id="popup3" class="overlay">
 								<div class="popup">
-									<h2>Editar Contato</h2>
+									<h2>Editar Nota</h2>
 									<a class="close" href="#">&times;</a>
 									<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
 										<p>Titulo*:<br><input type="text" nome="titulo_ed" id="titulo" value="'. $linha[1] .'"></p>

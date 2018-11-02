@@ -52,7 +52,7 @@
 						<a class="button" href="#popup1">+</a>
 						<div id="popup1" class="overlay">
 							<div class="popup">
-								<h2>Cadastrar Nova Nota</h2>
+								<h2>Cadastrar Novo Alarme</h2>
 								<a class="close" href="#">&times;</a>
 								<form id="form_notas" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
 									<p>Nome*:<br><input type="text" name="nome" id="nome" value=""></p>
@@ -140,12 +140,12 @@
 						     <img src="../IMAGENS/lupa.png" height="20" width="20"> 
 							 <div id="popup2" class="overlay">
 								<div class="popup">
-									<h2>Visualizar Contato</h2>
+									<h2>Visualizar Alarme</h2>
 									<a class="close" href="#">&times;</a>
 									<form id="form_notas_visual" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
 										<p>Nome*:<br><input type="text" id="titulo" value="'. $linha[1] .'" disabled></p>
-										<p>Data/Hora*:<br><input type="text" id="idade" value="'. $linha[3] .'" disabled></p>
-										<p>Lembrete:<br><textarea rows="4" cols="50" name="comment" form="form_notas_visual" disabled>'. $linha[2] .'</textarea></p>
+										<p>Data/Hora*:<br><input type="text" id="idade" value="'. $linha[2] .'" disabled></p>
+										<p>Lembrete:<br><textarea rows="4" cols="50" name="comment" form="form_notas_visual" disabled>'. $linha[3] .'</textarea></p>
 										<p>
 											<a href="#" class="buttom_cancelar">Cancelar</a>
 										</p>
@@ -162,12 +162,12 @@
 						     <img src="../IMAGENS/pencil.png" height="20" width="20"> 
 							 <div id="popup3" class="overlay">
 								<div class="popup">
-									<h2>Editar Contato</h2>
+									<h2>Editar Alarme</h2>
 									<a class="close" href="#">&times;</a>
 									<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
 										<p>Nome*:<br><input type="text" name="nome_ed" id="titulo" value="'. $linha[1] .'"></p>
-										<p>Data/Hora*:<br><input type="text" name="data_ed" id="idade" value="'. $linha[3] .'"></p>
-										<p>Lembrete:<br><textarea rows="4" cols="50" name="lembrete_ed" form="form_notas_visual">'. $linha[2] .'</textarea></p>
+										<p>Data/Hora*:<br><input type="text" name="data_ed" id="idade" value="'. $linha[2] .'"></p>
+										<p>Lembrete:<br><textarea rows="4" cols="50" name="lembrete_ed" form="form_notas_visual">'. $linha[3] .'</textarea></p>
 										<input type="text" name="id_alarme_ed" id="id_alarme_ed" value="'. $linha[0] .'" hidden>
 										<p>
 											<a href="#" class="buttom_cancelar">Cancelar</a>
