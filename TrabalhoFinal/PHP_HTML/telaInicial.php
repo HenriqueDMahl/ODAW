@@ -1,8 +1,6 @@
 <?php 
 	session_start();
 
-
-	global $id_usuario; 
 			
 	//RECEBE ID DO LOGIN
 	if (isset($_POST["submit_login"])) {
@@ -20,7 +18,6 @@
 			$select = "select id_usu from " . $table . " where email = '" . $_POST["login"] . "' and pass = '" . $_POST["pass"] . "';";
 			$consulta = mysql_query($select,$conexao);
 			$linha = mysql_fetch_row($consulta);
-			$id_usuario = (int)$linha[0];
 			$_SESSION['id_usuario_conect'] = (int)$linha[0];
 		}
 	}
@@ -38,7 +35,6 @@
 		$select = "select id_usu_relativo from " . $table . " where id_contato = '" . $_POST["id_contato_ed"] . "';";
 		$consulta = mysql_query($select,$conexao);
 		$linha = mysql_fetch_row($consulta);
-		$id_usuario = (int)$linha[0];
 		$_SESSION['id_usuario_conect'] = (int)$linha[0];
 		
 	}
@@ -98,7 +94,7 @@
 							<h2>Cadastrar Novo Contato</h2>
 							<a class="close" href="#">&times;</a>
 							<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
-								<p>Nome*:<br><input type="text" name="nome" id="nome" value=""></p>
+								<p>Nome*:<br><input type="text" name="nome_novo" id="nome" value=""></p>
 								<p>Endereço*:<br><input type="text" name="ender" id="ender" value=""></p>
 								<p>Idade:<br><input type="text" name="idade" id="idade" value=""></p>
 								<p id="email1">Email*:<br><input type="text" name="email" id="email" onblur="is_email()"></p>
@@ -109,7 +105,6 @@
 									Feminino<input type="radio" name="sexo" id="sexo" value="F">
 									Outro<input type="radio" name="sexo" id="sexo" value="O">
 								</p>
-								<input type="text" name="id" id="id" value="<?php echo $GLOBALS['id_usuario'] ?>" hidden>
 								<p>
 									<a href="#" class="buttom_cancelar">Cancelar</a>
 									&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -183,7 +178,6 @@
 											Feminino<input type="radio" id="sexo" value="F" '. ($linha[3]=='F'?"checked":"") .' disabled>
 											Outro<input type="radio" id="sexo" value="O" '. ($linha[3]=='O'?"checked":"") .' disabled>
 										</p>
-										<input type="text" name="id_ed" id="id" value="'. $GLOBALS['id_usuario'] .'" hidden>
 										<input type="text" name="id_contato_ed" id="id" value="'. $linha[0] .'" hidden>
 										<p>
 											<a href="#" class="buttom_cancelar">Cancelar</a>
@@ -217,7 +211,6 @@
 											Feminino<input type="radio" name="sexo_ed" id="sexo" '. ($linha[3]=='F'?"checked":"") .'  value="F">
 											Outro<input type="radio" name="sexo_ed" id="sexo" '. ($linha[3]=='O'?"checked":"") .'  value="O">
 										</p>
-										<input type="text" name="id_ed" id="id" value="'. $GLOBALS['id_usuario'] .'" hidden>
 										<input type="text" name="id_contato_ed" id="id" value="'. $linha[0] .'" hidden>
 										<p>
 											<a href="#" class="buttom_cancelar">Cancelar</a>
@@ -236,7 +229,6 @@
 									<button name="submit_deletar_contato" type="submit"> 
 										<img src="../IMAGENS/delet.png" height="20" width="20">
 									</button> 
-									<input type="text" name="id_del" id="id" value="'. $GLOBALS['id_usuario'] .'" hidden>
 									<input type="text" name="id_contato_del" id="id" value="'. $linha[0] .'" hidden>
 								</form> 
 							   </a> ';
@@ -246,7 +238,7 @@
 		}
 			//INSERE NOVO CONTATO
 			if (isset($_POST["submit_contato_novo"])) {
-				if( $_POST["nome"] != "" && $_POST["ender"] != "" && $_POST["email"] != "" && $_POST["fone"] != "" && $_POST["id"] != ""){
+				if( $_POST["nome_novo"] != "" && $_POST["ender"] != "" && $_POST["email"] != "" && $_POST["fone"] != ""){
 					
 					$db = "tf";
 					$conexao = mysql_connect('localhost','root','');
@@ -261,15 +253,16 @@
 					$table = "contatos";
 					$campos = "(nome_usu,end,sexo,idade,email,telefone,id_usu_relativo)";
 					
-					$insert = "insert into ". $table . $campos . " values ('". $_POST["nome"] ."','". $_POST["ender"] . "','". $_POST["sexo"] ."','". $_POST["idade"] ."','". $_POST["email"] ."','". $_POST["fone"] ."','". $_POST["id"] ."');";
+					$insert = "insert into ". $table . $campos . " values ('". $_POST["nome_novo"] ."','". $_POST["ender"] . "','". $_POST["sexo"] ."','". $_POST["idade"] ."','". $_POST["email"] ."','". $_POST["fone"] ."','". $_SESSION['id_usuario_conect'] ."');";
 					
 					$consulta = mysql_query($insert,$conexao);
 					echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
+					
 				}
 			}
 			//UPDATE CONTATO
 			if (isset($_POST["submit_editar_contato"])) {
-				if( $_POST["nome_ed"] != "" && $_POST["ender_ed"] != "" && $_POST["email_ed"] != "" && $_POST["fone_ed"] != "" && $_POST["id_ed"] != ""){
+				if( $_POST["nome_ed"] != "" && $_POST["ender_ed"] != "" && $_POST["email_ed"] != "" && $_POST["fone_ed"] != ""){
 					
 					$db = "tf";
 					$conexao = mysql_connect('localhost','root','');
