@@ -1,27 +1,30 @@
 <!DOCTYPE html>
+<?php
+session_start();
+?>
 <html>
 
   <head>
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="../CSS/css_padrao.css">
-    <link rel="stylesheet" type="text/css" href="../CSS/css_teste.css">
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="../CSS/css_padrao.css">
+	<link rel="stylesheet" type="text/css" href="../CSS/css_teste.css">
   </head>
-  
+
   <body class = "body_registro">
 	<script src="../JAVASCRIPT/javascript.js"></script>
 	<script src="../JAVASCRIPT/operacoes_tabela.js"></script>
 	<div>
-	    <!-- Placeholder -->
+		<!-- Placeholder -->
 		<div class = "div_login">
-		
+
 		<h2> Registro </h2>
-		
+
 		<hr>
-		
+
 		<p class="warning">Os campos marcados com '*' são obrigatórios! </p>
-		
-	    <!-- Conteudo -->
+
+		<!-- Conteudo -->
 		  <form id="form_login" class="form_registro" action="../PHP_HTML/index132.php" method="POST">
 			<p>Nome*:<br><input type="text" name="nome" id="nome" value=""></p>
 			<p>Endereço*:<br><input type="text" name="ender" id="ender" value=""></p>
@@ -45,11 +48,11 @@
 				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 	 			<button id="btConfirmar" name="submit_registro" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
 			</p>
-			
-			
+
+
 		  </form>
 		</div>
 	</div>
-  
+
   </body>
 </html>
