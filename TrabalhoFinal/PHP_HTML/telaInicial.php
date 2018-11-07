@@ -1,7 +1,13 @@
 <?php 
 	session_start();
-
+	
 			
+	if (isset($_POST["sair"])){
+		header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index132.php");
+		session_destroy();
+		die();
+	}
+	
 	//RECEBE ID DO LOGIN
 	if (isset($_POST["submit_login"])) {
 		if( $_POST["login"] != "" && $_POST["pass"] != ""){
@@ -18,25 +24,26 @@
 			$select = "select id_usu from " . $table . " where email = '" . $_POST["login"] . "' and pass = '" . $_POST["pass"] . "';";
 			$consulta = mysql_query($select,$conexao);
 			$linha = mysql_fetch_row($consulta);
+			if($linha == ""){
+				echo "<script>alert('Login ou senha invalido!')</script>";
+				header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index132.php");
+				session_destroy();
+				die();
+			}
 			$_SESSION['id_usuario_conect'] = (int)$linha[0];
+		}else{
+			echo "<script>alert('Login ou senha invalido!')</script>";
+			header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index132.php");
+			session_destroy();
+			die();
 		}
 	}
-	if (isset($_POST["submit_editar_contato"])) {
-		$db = "tf";
-		$conexao = mysql_connect('localhost','root','');
-
-		if(!$conexao){
-			die('Não foi possível conectar : '.mysql_error());
-		}
-		//echo 'Conexao bem sucedida <br>';
-
-		mysql_select_db($db,$conexao);
-		$table = "contatos";
-		$select = "select id_usu_relativo from " . $table . " where id_contato = '" . $_POST["id_contato_ed"] . "';";
-		$consulta = mysql_query($select,$conexao);
-		$linha = mysql_fetch_row($consulta);
-		$_SESSION['id_usuario_conect'] = (int)$linha[0];
-		
+	
+	if(!isset($_SESSION['id_usuario_conect'])){
+		echo "<script>alert('Login ou senha invalido!')</script>";
+		header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index132.php");
+		session_destroy();
+		die();
 	}
 
 ?>
@@ -62,7 +69,11 @@
 	<div class = "div_corpo">
 		<!-- MENU -->
 		&emsp;
-		<a href="index132.php" onclick="">Sair</a>
+		<form action="../PHP_HTML/telaInicial.php" method="POST"> 
+			<button name="sair" type="submit"> 
+				Sair
+			</button> 
+		</form> 
 		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -70,7 +81,7 @@
 		<div class="dropdown">
 		  <button class="dropbtn">MENU</button>
 		  <div class="dropdown-content">
-			<a href="#">Lista Grupos</a>
+			<a href="telaGrupo.php">Lista Grupos</a>
 			<a href="telaNotas.php">Lista Notas</a>
 			<a href="telaAlarme.php">Lista Alarmes</a>
 		  </div>

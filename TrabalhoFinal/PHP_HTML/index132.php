@@ -61,6 +61,11 @@
 			$insert = "insert into ". $table . $campos . " values ('". $_POST["nome"] ."','". $_POST["ender"] . "','". $_POST["sexo"] ."','". $_POST["idade"] ."','". $_POST["email"] ."','". $_POST["fone"] ."','','','". $_POST["pass1"] ."');";
 			
 			$consulta = mysql_query($insert,$conexao);
+			
+			if(!$consulta){
+				echo "<script>alert('Falha no cadastro!')</script>";
+				header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/registro.php");
+			}
 		}
 	}
 ?>

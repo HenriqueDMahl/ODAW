@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <?php 
 	session_start();
-	//echo '<script>alert("'. $_SESSION['id_usuario_conect'] .'")</script>'
+	
+	if(!isset($_SESSION['id_usuario_conect'])){
+		echo "<script>alert('Login ou senha invalido!')</script>";
+		header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index132.php");
+		session_destroy();
+		die();
+	}
 ?>
 <html>
 
@@ -32,8 +38,8 @@
 		  <button class="dropbtn">MENU</button>
 		  <div class="dropdown-content">
 			<a href="telaInicial.php">Lista Contato</a>
-			<a href="#">Lista Grupo</a>
-			<a href="#">Lista Alarme</a>
+			<a href="telaGrupo.php">Lista Grupo</a>
+			<a href="telaNotas.php">Lista Notas</a>
 		  </div>
 		</div>
 	    <!-- Placeholder -->
@@ -53,7 +59,7 @@
 							<div class="popup">
 								<h2>Cadastrar Novo Alarme</h2>
 								<a class="close" href="#">&times;</a>
-								<form id="form_notas" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
+								<form id="form_notas" class="form_registro" action="../PHP_HTML/telaAlarme.php" method="POST">
 									<p>Nome*:<br><input type="text" name="nome" id="nome" value=""></p>
 									<p>Data/Hora*:<br><input type="text" name="data" value=""></p>
 									<p>Lembrete:<br><textarea rows="4" cols="50" name="lembrete" form="form_notas"></textarea></p>
@@ -141,7 +147,7 @@
 								<div class="popup">
 									<h2>Visualizar Alarme</h2>
 									<a class="close" href="#">&times;</a>
-									<form id="form_notas_visual" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
+									<form id="form_notas_visual" class="form_registro" action="../PHP_HTML/telaAlarme.php" method="POST">
 										<p>Nome*:<br><input type="text" id="titulo" value="'. $linha[1] .'" disabled></p>
 										<p>Data/Hora*:<br><input type="text" id="idade" value="'. $linha[2] .'" disabled></p>
 										<p>Lembrete:<br><textarea rows="4" cols="50" name="comment" form="form_notas_visual" disabled>'. $linha[3] .'</textarea></p>
@@ -163,7 +169,7 @@
 								<div class="popup">
 									<h2>Editar Alarme</h2>
 									<a class="close" href="#">&times;</a>
-									<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
+									<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaAlarme.php" method="POST">
 										<p>Nome*:<br><input type="text" name="nome_ed" id="titulo" value="'. $linha[1] .'"></p>
 										<p>Data/Hora*:<br><input type="text" name="data_ed" id="idade" value="'. $linha[2] .'"></p>
 										<p>Lembrete:<br><textarea rows="4" cols="50" name="lembrete_ed" form="form_notas_visual">'. $linha[3] .'</textarea></p>
@@ -181,7 +187,7 @@
 					echo '</td>';
 					echo '<td>';
 						echo '<a href="#"> 
-								<form action="../PHP_HTML/telaInicial.php" method="POST"> 
+								<form action="../PHP_HTML/telaAlarme.php" method="POST"> 
 									<button name="submit_delete_alarme" type="submit"> 
 										<img src="../IMAGENS/delet.png" height="20" width="20">
 									</button> 
@@ -212,7 +218,7 @@
 		
 			//INSERE NOVO ALARME
 			if (isset($_POST["submit_alarme_novo"])) {
-				if( $_POST["nome"] != "" && $_POST["data/hora"] != ""){
+				if( $_POST["nome"] != "" && $_POST["data"] != ""){
 					
 					$db = "tf";
 					$conexao = mysql_connect('localhost','root','');
@@ -230,7 +236,7 @@
 					$insert = "insert into ". $table . $campos . " values ('". $_POST["nome"] ."','". $_POST["data"] . "','". $_POST["lembrete"] ."','". $_SESSION['id_usuario_conect'] ."');";
 					
 					$consulta = mysql_query($insert,$conexao);
-					echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
+					echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaAlarme.php'>";
 				}
 			}
 			//UPDATE ALARME
@@ -252,7 +258,7 @@
 					$update = "update ". $table . " set nome_ala = '". $_POST["nome_ed"] ."', data_hora_ala = '". $_POST["data_ed"] .", lembrete". $_POST["lembrete_ed"] ." where id_ala = '".  $_POST["id_alarme_ed"] ."';";
 					
 					$consulta = mysql_query($update,$conexao);
-					 echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaNotas.php'>";
+					 echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaAlarme.php'>";
 				}
 			}
 			
@@ -271,7 +277,7 @@
 				
 				$deletar = "Delete from ". $table . " where id_ala = ". $_POST["id_alarme_del"];
 				$consulta = mysql_query($deletar,$conexao);
-				echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
+				echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaAlarme.php'>";
 			}
 		
 		

@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <?php 
 	session_start();
-	//echo '<script>alert("'. $_SESSION['id_usuario_conect'] .'")</script>'
+	
+	if(!isset($_SESSION['id_usuario_conect'])){
+		echo "<script>alert('Login ou senha invalido!')</script>";
+		header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index132.php");
+		session_destroy();
+		die();
+	}
 ?>
 <html>
 
@@ -32,8 +38,8 @@
 		  <button class="dropbtn">MENU</button>
 		  <div class="dropdown-content">
 			<a href="telaInicial.php">Lista Contato</a>
-			<a href="#">Lista Grupo</a>
-			<a href="#">Lista Alarme</a>
+			<a href="telaGrupo.php">Lista Grupo</a>
+			<a href="telaAlarme.php">Lista Alarme</a>
 		  </div>
 		</div>
 	    <!-- Placeholder -->
@@ -54,7 +60,7 @@
 							<div class="popup">
 								<h2>Cadastrar Nova Nota</h2>
 								<a class="close" href="#">&times;</a>
-								<form id="form_notas" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
+								<form id="form_notas" class="form_registro" action="../PHP_HTML/telaNotas.php" method="POST">
 									<p>Titulo*:<br><input type="text" name="titulo" id="nome" value=""></p>
 									<p>Conteudo:<br><textarea rows="4" cols="50" name="conteudo" form="form_notas"></textarea></p>
 									<p>Remetente*:<br>
@@ -150,7 +156,7 @@
 								<div class="popup">
 									<h2>Visualizar Nota</h2>
 									<a class="close" href="#">&times;</a>
-									<form id="form_notas_visual" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
+									<form id="form_notas_visual" class="form_registro" action="../PHP_HTML/telaNotas.php" method="POST">
 										<p>Titulo*:<br><input type="text" id="titulo" value="'. $linha[1] .'" disabled></p>
 										<p>Conteudo:<br><textarea rows="4" cols="50" name="comment" form="form_notas_visual" disabled>'. $linha[2] .'</textarea></p>
 										<p>Remetente*:<br><input type="text" id="idade" value="'. getRemetente($linha[4]) .'" disabled></p>
@@ -173,7 +179,7 @@
 								<div class="popup">
 									<h2>Editar Nota</h2>
 									<a class="close" href="#">&times;</a>
-									<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
+									<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaNotas.php" method="POST">
 										<p>Titulo*:<br><input type="text" nome="titulo_ed" id="titulo" value="'. $linha[1] .'"></p>
 										<p>Conteudo:<br><textarea rows="4" cols="50" name="conteudo_ed" form="form_notas_visual">'. $linha[2] .'</textarea></p>
 										<p>Remetente*:<br><input type="text" id="idade" value="'. getRemetente($linha[4]) .'" disabled></p>
@@ -192,7 +198,7 @@
 					echo '</td>';
 					echo '<td>';
 						echo '<a href="#"> 
-								<form action="../PHP_HTML/telaInicial.php" method="POST"> 
+								<form action="../PHP_HTML/telaNotas.php" method="POST"> 
 									<button name="submit_delete_nota" type="submit"> 
 										<img src="../IMAGENS/delet.png" height="20" width="20">
 									</button> 
@@ -246,6 +252,8 @@
 			if (isset($_POST["submit_nota_novo"])) {
 				if( $_POST["titulo"] != "" && $_POST["select_contato"] != "null"){
 					
+					//echo "<script>alert('". $_POST["titulo"] .",". $_POST["conteudo"] .",". $_POST["select_contato"] ."')</script>";
+					
 					$db = "tf";
 					$conexao = mysql_connect('localhost','root','');
 
@@ -259,10 +267,21 @@
 					$table = "notas";
 					$campos = "(titulo,conteudo,id_usu_autor,id_usu_alvo,id_gru)";
 					
-					$insert = "insert into ". $table . $campos . " values ('". $_POST["titulo"] ."','". $_POST["conteudo"] . "','". $_SESSION['id_usuario_conect'] ."','". $_POST["select_contato"] ."','". $_POST["select_grupo"] ."');";
+					echo "<script>alert('". $table ."')</script>";
+					echo "<script>alert('". $campos ."')</script>";
+					
+					if($_POST["select_grupo"] != 'null'){
+						$insert = "insert into ". $table . $campos . " values ('". $_POST["titulo"] ."','". $_POST["conteudo"] . "','". $_SESSION['id_usuario_conect'] ."','". $_POST["select_contato"] ."','". $_POST["select_grupo"] ."');";
+					}else{
+						$insert = "insert into ". $table . $campos . " values ('". $_POST["titulo"] ."','". $_POST["conteudo"] . "','". $_SESSION['id_usuario_conect'] ."','". $_POST["select_contato"] ."',NULL);";
+					}
+					
+					
+					
+					echo $insert;
 					
 					$consulta = mysql_query($insert,$conexao);
-					echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
+					echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaNotas.php'>";
 				}
 			}
 			//UPDATE NOTA
@@ -303,7 +322,7 @@
 				
 				$deletar = "Delete from ". $table . " where id_nota = ". $_POST["id_nota_del"];
 				$consulta = mysql_query($deletar,$conexao);
-				echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
+				echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaNotas.php'>";
 			}
 		
 		
