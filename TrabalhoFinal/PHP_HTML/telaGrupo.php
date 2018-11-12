@@ -151,9 +151,9 @@
 						echo '<a href="telaNotas.php"> <img src="../IMAGENS/note.png" height="20" width="20"> </a> ';
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="#popup2"> 
+						echo '<a href="#popup'. ($linha[0]) .'"> 
 						     <img src="../IMAGENS/lupa.png" height="20" width="20"> 
-							 <div id="popup2" class="overlay">
+							 <div id="popup'. ($linha[0]) .'" class="overlay">
 								<div class="popup">
 									<h2>Visualizar Contato</h2>
 									<a class="close" href="#">&times;</a>
@@ -174,9 +174,9 @@
 						echo '<a href="tela_alaermes.php"> <img src="../IMAGENS/bell.png" height="20" width="20"> </a> ';
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="#popup3"> 
+						echo '<a href="#popup'. (0-$linha[0]) .'"> 
 						     <img src="../IMAGENS/pencil.png" height="20" width="20"> 
-							 <div id="popup3" class="overlay">
+							 <div id="popup'. (0-$linha[0]) .'" class="overlay">
 								<div class="popup">
 									<h2>Editar Contato</h2>
 									<a class="close" href="#">&times;</a>
