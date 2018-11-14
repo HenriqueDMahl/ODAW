@@ -25,7 +25,7 @@
   
   <body style="background-color: rgb(135,206,235);">
 	<script src="../JAVASCRIPT/javascript.js"></script>
-	<script src="../JAVASCRIPT/operacoes_tabela.js"></script>
+	<script src="../JAVASCRIPT/funcao_grupo.js"></script>
 	<SCRIPT SRC="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></SCRIPT>
 	<div class = "div_corpo">
 		<!-- MENU -->
@@ -59,17 +59,15 @@
 						<a class="button" href="#popup1">+</a>
 						<div id="popup1" class="overlay">
 							<div class="popup">
-								<h2>Cadastrar Nova Nota</h2>
+								<h2>Cadastrar Novo Grupo</h2>
 								<a class="close" href="#">&times;</a>
 								<form id="form_notas" class="form_registro" action="../PHP_HTML/telaGrupo.php" method="POST">
 									<p>Nome*:<br><input type="text" name="nome" id="nome" value=""></p>
-									<p>Conteudo:<br><textarea rows="4" cols="50" name="conteudo" form="form_notas"></textarea></p>
-									<p>Remetente*:<br>
+									<p>Membros Novo:<br>
 									<?php monta_combobox("contatos","id_contato,nome_usu",1) ?>
-									</p>
-									<p>Grupo:<br>
-									<?php monta_combobox("grupos","id_gru,nome_grup",0) ?>
-									</p>
+									<a class="button" style="color: black;" onclick="adicionar()">Adicionar</a>
+									</p>								
+									<p>Membros:<br><textarea id="txtArea" rows="4" cols="50" name="lembrete" form="form_notas" disabled></textarea></p>
 									<p>
 										<a href="#" class="buttom_cancelar">Cancelar</a>
 										&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -101,7 +99,7 @@
 			
 			$select = "";
 			if($flag == 1){
-				echo '<select name = "select_contato">';
+				echo '<select id="contatos"  name = "select_contato">';
 				$select = "select ". $campos ." from ". $table ." where id_usu_relativo = " . $_SESSION['id_usuario_conect'] . ";";
 			}else{
 				echo '<select name = "select_grupo">';

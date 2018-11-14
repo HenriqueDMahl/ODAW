@@ -118,7 +118,6 @@
 
 		}
 
-
 		function monta_tabela($table){
 			$db = "tf";
 			$conexao = mysql_connect('localhost','root','');
@@ -129,7 +128,11 @@
 			//echo 'Conexao bem sucedida <br>';
 
 			mysql_select_db($db,$conexao);
-			$select = "Select * from ". $table . " where id_usu_autor = " . $_SESSION['id_usuario_conect'] . ";";
+			if(isset($_POST["submit_filtro_notas"])){
+				$select = "Select * from ". $table . " where id_usu_autor = ". $_SESSION['id_usuario_conect'] ." and id_usu_alvo = ". $_POST["id_filtro_notas"] . ";";
+			}else{
+				$select = "Select * from ". $table . " where id_usu_autor = " . $_SESSION['id_usuario_conect'] . ";";
+			}
 			echo "<script>alert('". $select ."')</script>";
 			$consulta = mysql_query($select,$conexao);
 			while($linha = mysql_fetch_row($consulta)){
@@ -152,6 +155,7 @@
 					echo '<td>';
 						echo '<a href="#popup'. ($linha[0]) .'"> 
 						     <img src="../IMAGENS/lupa.png" height="20" width="20"> 
+							 </a>
 							 <div id="popup'. ($linha[0]) .'" class="overlay">
 								<div class="popup">
 									<h2>Visualizar Nota</h2>
@@ -166,8 +170,7 @@
 										</p>
 								  </form>
 								</div>
-							</div>
-							 </a>';
+							</div>';
 					echo '</td>';
 					echo '<td>';
 						echo '<a href="telaAlarme.php"> <img src="../IMAGENS/bell.png" height="20" width="20"> </a> ';
@@ -175,6 +178,7 @@
 					echo '<td>';
 						echo '<a href="#popup'. (0-$linha[0]) .'"> 
 						     <img src="../IMAGENS/pencil.png" height="20" width="20"> 
+							 </a>
 							 <div id="popup'. (0-$linha[0]) .'" class="overlay">
 								<div class="popup">
 									<h2>Editar Nota</h2>
@@ -193,8 +197,7 @@
 										</p>
 								  </form>
 								</div>
-							</div>
-							 </a>';
+							</div>';
 					echo '</td>';
 					echo '<td>';
 						echo '<a href="#"> 

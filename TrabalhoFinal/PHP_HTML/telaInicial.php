@@ -168,7 +168,14 @@
 						echo $linha[6];
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="telaNotas.php"> <img src="../IMAGENS/note.png" height="20" width="20"> </a> ';
+						echo '<a href="#"> 
+									<form action="../PHP_HTML/telaNotas.php" method="POST"> 
+										<button name="submit_filtro_notas" type="submit"> 
+											<img src="../IMAGENS/note.png" height="20" width="20">
+										</button> 
+										<input type="text" name="id_filtro_notas" id="id" value="'. $linha[0] .'" hidden>
+									</form> 
+								   </a> ';
 					echo '</td>';
 					echo '<td>';
 						echo '<a href="#popup'. ($linha[0]) .'"> 
