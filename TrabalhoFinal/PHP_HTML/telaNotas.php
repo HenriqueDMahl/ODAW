@@ -52,8 +52,6 @@
 					<th> Grupo </th>
 					<th>  </th>
 					<th>  </th>
-					<th>  </th>
-					<th>  </th>
 					<th> 
 						<a class="button" href="#popupInicial">+</a>
 						<div id="popupInicial" class="overlay">
@@ -150,9 +148,6 @@
 						echo $linha[5];
 					echo '</td>';
 					echo '<td>';
-						echo '<a href="telaNotas.php"> <img src="../IMAGENS/note.png" height="20" width="20"> </a> ';
-					echo '</td>';
-					echo '<td>';
 						echo '<a href="#popup'. ($linha[0]) .'"> 
 						     <img src="../IMAGENS/lupa.png" height="20" width="20"> 
 							 </a>
@@ -171,9 +166,6 @@
 								  </form>
 								</div>
 							</div>';
-					echo '</td>';
-					echo '<td>';
-						echo '<a href="telaAlarme.php"> <img src="../IMAGENS/bell.png" height="20" width="20"> </a> ';
 					echo '</td>';
 					echo '<td>';
 						echo '<a href="#popup'. (0-$linha[0]) .'"> 

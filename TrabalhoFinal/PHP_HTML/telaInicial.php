@@ -97,7 +97,6 @@
 					<th>  </th>
 					<th>  </th>
 					<th>  </th>
-					<th>  </th>
 					<th> 
 					<a class="button" href="#popupInicial">+</a>
 					<div id="popupInicial" class="overlay">
@@ -206,9 +205,6 @@
 								  </form>
 								</div>
 							</div>';
-					echo '</td>';
-					echo '<td>';
-						echo '<a href="tela_alaermes.php"> <img src="../IMAGENS/bell.png" height="20" width="20"> </a> ';
 					echo '</td>';
 					echo '<td>';
 						echo '<a href="#popup'. (0-$linha[0]) .'">
