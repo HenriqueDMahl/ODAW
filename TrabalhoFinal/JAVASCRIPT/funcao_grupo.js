@@ -1,11 +1,14 @@
 function adicionar() {
 	var id_membro = document.getElementById('contatos').value;
+	var ids = document.getElementById('ids').value;
 	var texto = document.getElementById('txtArea').value;
 	if(texto == ""){
-		texto = ""+id_membro;
+		ids = ""+id_membro;
+		texto = ""+document.getElementById('contatos').options[id_membro].text;
 		var x = document.getElementById('contatos').options[id_membro].disabled = true;
 	}else{
-		texto += ","+id_membro;
+		ids = ","+id_membro;
+		texto += ","+document.getElementById('contatos').options[id_membro].text;
 		var y = document.getElementById('contatos').options[id_membro].disabled = true;
 	}
 	document.getElementById('txtArea').value = texto;
