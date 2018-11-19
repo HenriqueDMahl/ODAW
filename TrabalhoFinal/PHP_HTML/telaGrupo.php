@@ -25,7 +25,7 @@
   
   <body style="background-color: rgb(135,206,235);">
 	<script src="../JAVASCRIPT/javascript.js"></script>
-	<script src="../JAVASCRIPT/funcao_grupo.js"></script>
+	<script src="../JAVASCRIPT/funcao_grupo3.js"></script>
 	<SCRIPT SRC="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></SCRIPT>
 	<div class = "div_corpo">
 		<!-- MENU -->
@@ -66,8 +66,8 @@
 									<?php monta_combobox("contatos","id_contato,nome_usu",1) ?>
 									<a class="button" style="color: black;" onclick="adicionar()">Adicionar</a>
 									</p>								
+									<input type="text" id="ids" name="ids" value="" hidden>
 									<p>Membros:<br><textarea id="txtArea" rows="4" cols="50" name="membros" form="form_notas" disabled></textarea></p>
-									<input type="text" id="ids" value="" hidden>
 									<p>
 										<a href="#" class="buttom_cancelar">Cancelar</a>
 										&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -149,10 +149,10 @@
 						echo '<td>';
 						echo '<a href="#"> 
 									<form action="../PHP_HTML/telaNotas.php" method="POST"> 
-										<button name="submit_filtro_notas" type="submit"> 
+										<button name="submit_filtro_grupos" type="submit"> 
 											<img src="../IMAGENS/note.png" height="20" width="20">
 										</button> 
-										<input type="text" name="id_filtro_notas" id="id" value="'. $linha[0] .'" hidden>
+										<input type="text" name="id_filtro_grupos" id="id" value="'. $linha[0] .'" hidden>
 									</form> 
 								   </a> ';
 					echo '</td>';
@@ -183,9 +183,16 @@
 										<h2>Editar Grupo</h2>
 										<a class="close" href="#">&times;</a>
 										<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaGrupo.php" method="POST">
-											<p>Nome*:<br><input type="text" id="titulo" value="'. $linha[1] .'"></p>
+											<p>Nome*:<br><input type="text" id="titulo" name="nome_ed" value="'. $linha[1] .'"></p>
+											<input type="text" name="id_grupo_ed" id="id_grupo_ed" value="'. $linha[0] .'" hidden>
 											<?php monta_combobox("contatos","id_contato,nome_usu",1) ?>
 											<p>Membros:<br><textarea rows="4" cols="50" name="comment" form="form_notas_visual" disabled>'. getMembros($linha[3]) .'</textarea></p>
+											<p>
+												<a href="#" class="buttom_cancelar">Cancelar</a>
+												&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+												&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+									 			<button id="btAtt" name="submit_editar_grupo" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
+											</p>
 									  </form>
 									</div>
 								</div>';
@@ -244,15 +251,15 @@
 					$table = "grupos";
 					$campos = "(nome_grup,qtd,lista_mem,lista_notas)";
 					
-					$insert = "insert into ". $table . $campos . " values ('". $_POST["nome"] ."','". (strlen($_POST["membros"])+1) . "','". $_SESSION['id_usuario_conect'] . "," . $_POST["membros"] ."',NULL);";
-		
+					$insert = "insert into ". $table . $campos . " values ('". $_POST["nome"] ."','". (strlen(str_replace(',','',$_POST["ids"]))+1) . "','". $_SESSION['id_usuario_conect'] . "U," . $_POST["ids"] ."',NULL);";
+					
 					$consulta = mysql_query($insert,$conexao);
 					echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaGrupo.php'>";
 				}
 			}
-			//UPDATE CONTATO
-			if (isset($_POST["submit_editar_nota"])) {
-				if( $_POST["titulo"] != ""){
+			//UPDATE GRUPO
+			if (isset($_POST["submit_editar_grupo"])) {
+				if( $_POST["nome_ed"] != ""){
 					
 					$db = "tf";
 					$conexao = mysql_connect('localhost','root','');
@@ -264,9 +271,9 @@
 
 					mysql_select_db($db,$conexao);
 					
-					$table = "notas";
+					$table = "grupos";
 					
-					$update = "update ". $table . " set titulo = '". $_POST["titulo"] ."', conteudo = '". $_POST["conteudo"] ." where id_nota = '".  $_POST["id_nota_ed"] ."';";
+					$update = "update ". $table . " set nome_grup = '". $_POST["nome_ed"] ."' where id_gru = '".  $_POST["id_grupo_ed"] ."';";
 					
 					$consulta = mysql_query($update,$conexao);
 					 echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaGrupo.php'>";

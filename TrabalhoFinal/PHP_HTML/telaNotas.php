@@ -128,6 +128,8 @@
 			mysql_select_db($db,$conexao);
 			if(isset($_POST["submit_filtro_notas"])){
 				$select = "Select * from ". $table . " where id_usu_autor = ". $_SESSION['id_usuario_conect'] ." and id_usu_alvo = ". $_POST["id_filtro_notas"] . ";";
+			}if(isset($_POST["submit_filtro_grupos"])){
+				$select = "Select * from ". $table . " where id_gru = ". $_POST["id_filtro_grupos"] . ";";
 			}else{
 				$select = "Select * from ". $table . " where id_usu_autor = " . $_SESSION['id_usuario_conect'] . ";";
 			}
@@ -145,7 +147,7 @@
 						echo getRemetente($linha[4]);
 					echo '</td>';
 					echo '<td>';
-						echo $linha[5];
+						echo getGrupo($linha[5]);
 					echo '</td>';
 					echo '<td>';
 						echo '<a href="#popup'. ($linha[0]) .'"> 
@@ -179,8 +181,8 @@
 										<p>Titulo*:<br><input type="text" nome="titulo_ed" id="titulo" value="'. $linha[1] .'"></p>
 										<p>Conteudo:<br><textarea rows="4" cols="50" name="conteudo_ed" form="form_notas_visual">'. $linha[2] .'</textarea></p>
 										<p>Remetente*:<br><input type="text" id="idade" value="'. getRemetente($linha[4]) .'" disabled></p>
-										<p>Grupo:<br><input type="text" id="email" value="'. $linha[5] .'" disabled></p>
-										<input type="text" name="id_nota_ed" id="id_nota_ed" value="'. getGrupo($linha[0]) .'" hidden>
+										<p>Grupo:<br><input type="text" id="email" value="'. getGrupo($linha[5]) .'" disabled></p>
+										<input type="text" name="id_nota_ed" id="id_nota_ed" value="'. $linha[0] .'" hidden>
 										<p>
 											<a href="#" class="buttom_cancelar">Cancelar</a>
 											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -204,6 +206,7 @@
 				echo '</tr>';
 			}
 		}
+		
 		
 			function getRemetente($id_rementete){
 				$db = "tf";
