@@ -1,0 +1,25 @@
+div.container {
+        height: 100%;
+    }
+
+    div.titulo {
+        font-size: 2vw;
+        text-align: center;
+        position: relative;
+    }
+
+    div.op1 {
+        width: 50%;
+        display: inline-block;
+        text-align: center;
+        min-width:10vw;
+    }
+
+    div.op2 {
+        width: 50%;
+        display: inline-block;
+        margin-right: 0vw;
+        text-align: center;
+        min-width:10vw;
+        float:right;
+    }
