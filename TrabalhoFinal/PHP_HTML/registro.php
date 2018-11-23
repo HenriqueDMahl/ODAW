@@ -14,6 +14,7 @@ session_start();
   <body class = "body_registro">
 	<script src="../JAVASCRIPT/javascript.js"></script>
 	<script src="../JAVASCRIPT/operacoes_tabela.js"></script>
+	<script src="../JAVASCRIPT/fone.js"></script>
 	<div>
 		<!-- Placeholder -->
 		<div class = "div_login">
@@ -29,8 +30,8 @@ session_start();
 			<p>Nome*:<br><input type="text" name="nome" id="nome" value=""></p>
 			<p>Endereço*:<br><input type="text" name="ender" id="ender" value=""></p>
 			<p>Idade:<br><input type="text" name="idade" id="idade" value=""></p>
-			<p id="email1">Email*:<br><input type="text" name="email" id="email" onblur="is_email()"></p>
-			<p>Telefone*:<br><input type="text" name="fone" id="fone" value=""></p>
+			<p id="email1">Email*:<br><input type="text" name="email" id="email" placeholder="example@example.com" onblur="is_email()"></p>
+			<p id="fone1">Telefone*:<br><input type="text" name="fone" id="fone" value="" placeholder="12345678" onchange="is_fone()"></p>
 			<p id="pass">Senha*:<br><input type="password" name="pass1" id="pass1" value=""></p>
 			<p id="passC">	
 				Confirmar Senha*:<br>

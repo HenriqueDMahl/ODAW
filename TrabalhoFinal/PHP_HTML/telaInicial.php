@@ -65,6 +65,7 @@
   <body style="background-color: rgb(135,206,235);">
 	<script src="../JAVASCRIPT/javascript.js"></script>
 	<script src="../JAVASCRIPT/popup.js"></script>
+	<script src="../JAVASCRIPT/fone.js"></script>
 	<SCRIPT SRC="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></SCRIPT>
 	<div class = "div_corpo">
 		<!-- MENU -->
@@ -107,8 +108,8 @@
 								<p>Nome*:<br><input type="text" name="nome_novo" id="nome" value=""></p>
 								<p>Endereço*:<br><input type="text" name="ender" id="ender" value=""></p>
 								<p>Idade:<br><input type="text" name="idade" id="idade" value=""></p>
-								<p id="email1">Email*:<br><input type="text" name="email" id="email" onblur="is_email()"></p>
-								<p>Telefone*:<br><input type="text" name="fone" id="fone" value=""></p>
+								<p id="email1">Email*:<br><input type="text" name="email" id="email" onblur="is_email()" placeholder="example@example.com"></p>
+								<p>Telefone*:<br><input type="text" name="fone" id="fone" value="" placeholder="12345678" onchange="is_fone()"></p>
 								<p>Sexo:</p>
 								<p>
 									Masculino<input type="radio" name="sexo" id="sexo" value="M">
