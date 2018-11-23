@@ -4,7 +4,7 @@
 	
 	if(!isset($_SESSION['id_usuario_conect'])){
 		echo "<script>alert('Login ou senha invalido!')</script>";
-		header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index132.php");
+		header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index.php");
 		session_destroy();
 		die();
 	}
@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="../CSS/css_popup.css" title="Default Styles" media="screen">
     <link rel="stylesheet" type="text/css" href="../CSS/css_teste.css" title="Default Styles" media="screen">
     <link rel="stylesheet" type="text/css" href="../CSS/css_padrao.css" title="Default Styles" media="screen">
-    <!-- <link rel="stylesheet" type="text/css" href="../CSS/css_imagens.css" title="Default Styles" media="screen"> -->
+    <link rel="stylesheet" type="text/css" href="../CSS/css_conteiner.css" title="Default Styles" media="screen">
   </head>
   
   <body style="background-color: rgb(135,206,235);">
@@ -29,25 +29,32 @@
 	<SCRIPT SRC="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></SCRIPT>
 	<div class = "div_corpo">
 		<!-- MENU -->
-		&emsp;
-		<a href="index132.php" onclick="">Sair</a>
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		<div class="dropdown">
-		  <button class="dropbtn">MENU</button>
-		  <div class="dropdown-content">
-			<a href="telaInicial.php">Lista Contato</a>
-			<a href="telaNotas.php">Lista Notas</a>
-			<a href="telaAlarme.php">Lista Alarme</a>
-		  </div>
+		<div class="container">
+			<div class="col-md-12"></div>
+			<div class="titulo"><h2>Grupos</h2></div>
+			<div class="op1">
+				<form action="../PHP_HTML/telaInicial.php" method="POST"> 
+					<button class="dropbtn" name="sair" type="submit"> 
+						Sair
+					</button> 
+				</form> 
+			</div>
+			<div class="op2">
+				<div class="dropdown">
+				  <button class="dropbtn">MENU</button>
+				  <div class="dropdown-content">
+					<a href="telaInicial.php">Lista Contatos</a>
+					<a href="telaAlarme.php">Lista Alarmes</a>
+					<a href="telaGrupo.php">Lista Grupos</a>
+					<a href="telaNotas.php">Lista Notas</a>
+				  </div>
+				</div>
+			</div>
 		</div>
 	    <!-- Placeholder -->
 		<div class = "div_principal">
 			<table>
 				<tr>
-					<th> ID </th>
 					<th> Nome </th>
 					<th> Qtd </th>
 					<th> Membros </th>
@@ -61,7 +68,7 @@
 								<h2>Cadastrar Novo Grupo</h2>
 								<a class="close" href="#">&times;</a>
 								<form id="form_notas" class="form_registro" action="../PHP_HTML/telaGrupo.php" method="POST">
-									<p>Nome*:<br><input type="text" name="nome" id="nome" value=""></p>
+									<p>Nome*:<br><input type="text" name="nome" id="nome" value="" maxlength="30"></p>
 									<p>Membros Novo:<br>
 									<?php monta_combobox("contatos","id_contato,nome_usu",1) ?>
 									<a class="button" style="color: black;" onclick="adicionar()">Adicionar</a>
@@ -125,18 +132,13 @@
 			if(!$conexao){
 				die('Não foi possível conectar : '.mysql_error());
 			}
-			//echo 'Conexao bem sucedida <br>';
 
 			mysql_select_db($db,$conexao);
 			$select = "Select * from ". $table . ";";
-			echo "<script>alert('". $select ."')</script>";
 			$consulta = mysql_query($select,$conexao);
 			while($linha = mysql_fetch_row($consulta)){
 				if(strchr($linha[3],"". $_SESSION['id_usuario_conect'] ."U") != ""){
 					echo '<tr>';
-						echo '<td name="id">';
-							echo $linha[0];
-						echo '</td>';
 						echo '<td name="titulo">';
 							echo $linha[1];
 						echo '</td>';
@@ -183,7 +185,7 @@
 										<h2>Editar Grupo</h2>
 										<a class="close" href="#">&times;</a>
 										<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaGrupo.php" method="POST">
-											<p>Nome*:<br><input type="text" id="titulo" name="nome_ed" value="'. $linha[1] .'"></p>
+											<p>Nome*:<br><input type="text" id="titulo" name="nome_ed" value="'. $linha[1] .'" maxlength="30"></p>
 											<input type="text" name="id_grupo_ed" id="id_grupo_ed" value="'. $linha[0] .'" hidden>
 											<?php monta_combobox("contatos","id_contato,nome_usu",1) ?>
 											<p>Membros:<br><textarea rows="4" cols="50" name="comment" form="form_notas_visual" disabled>'. getMembros($linha[3]) .'</textarea></p>
@@ -219,7 +221,6 @@
 				if(!$conexao){
 					die('Não foi possível conectar : '.mysql_error());
 				}
-				//echo 'Conexao bem sucedida <br>';
 				
 				mysql_select_db($db,$conexao);
 				$select = "select id_contato,nome_usu from contatos where id_usu_relativo = ". $_SESSION['id_usuario_conect'] . ";";
@@ -244,7 +245,6 @@
 					if(!$conexao){
 						die('Não foi possível conectar : '.mysql_error());
 					}
-					//echo 'Conexao bem sucedida <br>';
 
 					mysql_select_db($db,$conexao);
 					
@@ -267,7 +267,6 @@
 					if(!$conexao){
 						die('Não foi possível conectar : '.mysql_error());
 					}
-					//echo 'Conexao bem sucedida <br>';
 
 					mysql_select_db($db,$conexao);
 					
@@ -303,10 +302,5 @@
 					echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaGrupo.php'>";
 				}
 			}
-		
-		
-		//$insert = "insert into ". $table . $campos . " values ('Marvin','Talvez seja util');";
-		//$update = "update ". $table . " set nome = 'Marvin Graycastle' where nome = 'Marvin';";
-		//$delete = "delete from " . $table . " where nome = 'Marvin Graycastle';";
 		
 ?>

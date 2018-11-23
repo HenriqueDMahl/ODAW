@@ -26,12 +26,12 @@ session_start();
 		<p class="warning">Os campos marcados com '*' são obrigatórios! </p>
 
 		<!-- Conteudo -->
-		  <form id="form_login" class="form_registro" action="../PHP_HTML/index132.php" method="POST">
-			<p>Nome*:<br><input type="text" name="nome" id="nome" value=""></p>
-			<p>Endereço*:<br><input type="text" name="ender" id="ender" value=""></p>
-			<p>Idade:<br><input type="text" name="idade" id="idade" value=""></p>
-			<p id="email1">Email*:<br><input type="text" name="email" id="email" placeholder="example@example.com" onblur="is_email()"></p>
-			<p id="fone1">Telefone*:<br><input type="text" name="fone" id="fone" value="" placeholder="12345678" onchange="is_fone()"></p>
+		  <form id="form_login" class="form_registro" action="../PHP_HTML/index.php" method="POST">
+			<p>Nome*:<br><input type="text" name="nome" id="nome" value="" maxlength="30"></p>
+			<p>Endereço*:<br><input type="text" name="ender" id="ender" value="" maxlength="50"></p>
+			<p id="idade1">Idade:<br><input type="text" name="idade" id="idade" value="" onchange="is_idade()" maxlength="2"></p>
+			<p id="email1">Email*:<br><input type="text" name="email" id="email" placeholder="example@example.com" onblur="is_email()" maxlength="30"></p>
+			<p id="fone1">Telefone*:<br><input type="text" name="fone" id="fone" value="" placeholder="12345678" onchange="is_fone()" maxlength="8"></p>
 			<p id="pass">Senha*:<br><input type="password" name="pass1" id="pass1" value=""></p>
 			<p id="passC">	
 				Confirmar Senha*:<br>
@@ -44,10 +44,10 @@ session_start();
 				Outro<input type="radio" name="sexo" id="sexo" value="O">
 			</p>
 			<p>
-				<a href="index132.php" class="buttom_cancelar">Cancelar</a>
+				<a href="index.php" class="buttom_cancelar">Cancelar</a>
 				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-	 			<button id="btConfirmar" name="submit_registro" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
+	 			<button id="btConfirmar" name="submit_registro" type="submit" class="buttom_confirmar">Confirmar</button>
 			</p>
 
 

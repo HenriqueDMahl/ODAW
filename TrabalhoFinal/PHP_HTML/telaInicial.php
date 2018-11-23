@@ -3,7 +3,7 @@
 	
 			
 	if (isset($_POST["sair"])){
-		header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index132.php");
+		header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index.php");
 		session_destroy();
 		die();
 	}
@@ -17,7 +17,6 @@
 			if(!$conexao){
 				die('Não foi possível conectar : '.mysql_error());
 			}
-			//echo 'Conexao bem sucedida <br>';
 
 			mysql_select_db($db,$conexao);
 			$table = "usuarios";
@@ -26,14 +25,14 @@
 			$linha = mysql_fetch_row($consulta);
 			if($linha == ""){
 				echo "<script>alert('Login ou senha invalido!')</script>";
-				header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index132.php");
+				header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index.php");
 				session_destroy();
 				die();
 			}
 			$_SESSION['id_usuario_conect'] = (int)$linha[0];
 		}else{
 			echo "<script>alert('Login ou senha invalido!')</script>";
-			header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index132.php");
+			header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index.php");
 			session_destroy();
 			die();
 		}
@@ -41,7 +40,7 @@
 	
 	if(!isset($_SESSION['id_usuario_conect'])){
 		echo "<script>alert('Login ou senha invalido!')</script>";
-		header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index132.php");
+		header("Location: http://localhost/ODAW-master/TrabalhoFinal/PHP_HTML/index.php");
 		session_destroy();
 		die();
 	}
@@ -52,14 +51,14 @@
 
   <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Contatos</title>
     <link rel="stylesheet" type="text/css" href="../CSS/css_telainicial.css" title="Default Styles" media="screen">
     <link rel="stylesheet" type="text/css" href="../CSS/css_buttons.css" title="Default Styles" media="screen">
     <link rel="stylesheet" type="text/css" href="../CSS/css_tables.css" title="Default Styles" media="screen">
     <link rel="stylesheet" type="text/css" href="../CSS/css_popup.css" title="Default Styles" media="screen">
     <link rel="stylesheet" type="text/css" href="../CSS/css_teste.css" title="Default Styles" media="screen">
     <link rel="stylesheet" type="text/css" href="../CSS/css_padrao.css" title="Default Styles" media="screen">
-    <!-- <link rel="stylesheet" type="text/css" href="../CSS/css_imagens.css" title="Default Styles" media="screen"> -->
+    <link rel="stylesheet" type="text/css" href="../CSS/css_conteiner.css" title="Default Styles" media="screen">
   </head>
   
   <body style="background-color: rgb(135,206,235);">
@@ -69,29 +68,32 @@
 	<SCRIPT SRC="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></SCRIPT>
 	<div class = "div_corpo">
 		<!-- MENU -->
-		&emsp;
-		<form action="../PHP_HTML/telaInicial.php" method="POST"> 
-			<button name="sair" type="submit"> 
-				Sair
-			</button> 
-		</form> 
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		<div class="dropdown">
-		  <button class="dropbtn">MENU</button>
-		  <div class="dropdown-content">
-			<a href="telaGrupo.php">Lista Grupos</a>
-			<a href="telaNotas.php">Lista Notas</a>
-			<a href="telaAlarme.php">Lista Alarmes</a>
-		  </div>
+		<div class="container">
+			<div class="col-md-12"></div>
+			<div class="titulo"><h2>Contatos</h2></div>
+			<div class="op1">
+				<form action="../PHP_HTML/telaInicial.php" method="POST"> 
+					<button class="dropbtn" name="sair" type="submit"> 
+						Sair
+					</button> 
+				</form> 
+			</div>
+			<div class="op2">
+				<div class="dropdown">
+				  <button class="dropbtn">MENU</button>
+				  <div class="dropdown-content">
+					<a href="telaInicial.php">Lista Contatos</a>
+					<a href="telaAlarme.php">Lista Alarmes</a>
+					<a href="telaGrupo.php">Lista Grupos</a>
+					<a href="telaNotas.php">Lista Notas</a>
+				  </div>
+				</div>
+			</div>
 		</div>
 	    <!-- Placeholder -->
 		<div class = "div_principal">
 			<table>
 				<tr>
-					<th> ID </th>
 					<th> Nome </th>
 					<th> E-mail </th>
 					<th> Telefone </th>
@@ -105,11 +107,11 @@
 							<h2>Cadastrar Novo Contato</h2>
 							<a class="close" href="#">&times;</a>
 							<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
-								<p>Nome*:<br><input type="text" name="nome_novo" id="nome" value=""></p>
-								<p>Endereço*:<br><input type="text" name="ender" id="ender" value=""></p>
-								<p>Idade:<br><input type="text" name="idade" id="idade" value=""></p>
-								<p id="email1">Email*:<br><input type="text" name="email" id="email" onblur="is_email()" placeholder="example@example.com"></p>
-								<p>Telefone*:<br><input type="text" name="fone" id="fone" value="" placeholder="12345678" onchange="is_fone()"></p>
+								<p>Nome*:<br><input type="text" name="nome_novo" id="nome" value="" maxlength="30"></p>
+								<p>Endereço*:<br><input type="text" name="ender" id="ender" value="" maxlength="50"></p>
+								<p id="idade1">Idade:<br><input type="text" name="idade" id="idade" value="" onchange="is_idade()" maxlength="2"></p>
+								<p id="email1">Email*:<br><input type="text" name="email" id="email" onblur="is_email()" placeholder="example@example.com" maxlength="30"></p>
+								<p id="fone1">Telefone*:<br><input type="text" name="fone" id="fone" value="" placeholder="12345678" onchange="is_fone()" maxlength="8"></p>
 								<p>Sexo:</p>
 								<p>
 									Masculino<input type="radio" name="sexo" id="sexo" value="M">
@@ -125,7 +127,6 @@
 						  </form>
 						</div>
 					</div>
-					<!--<button style="border-radius: 5px;" onclick="trigger_popup_fricc">+</button>-->
 					</th>
 				<tr>
 				<?php
@@ -135,7 +136,6 @@
 					if(!$conexao){
 						die('Não foi possível conectar : '.mysql_error());
 					}
-					//echo 'Conexao bem sucedida <br>';
 
 					mysql_select_db($db,$conexao);
 					
@@ -151,13 +151,9 @@
 		
 		function monta_tabela($table,$conexao){
 			$select = "Select * from ". $table . " where id_usu_relativo = " . $_SESSION['id_usuario_conect'] . ";";
-			echo "<script>alert('". $select ."')</script>";
 			$consulta = mysql_query($select,$conexao);
 			while($linha = mysql_fetch_row($consulta)){
 				echo '<tr>';
-					echo '<td name="id">';
-						echo $linha[0];
-					echo '</td>';
 					echo '<td name="nome">';
 						echo $linha[1];
 					echo '</td>';
@@ -216,11 +212,11 @@
 									<h2>Editar Contato</h2>
 									<a class="close" href="#">&times;</a>
 									<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
-										<p>Nome*:<br><input type="text" name="nome_ed" id="nome" value="'. $linha[1] .'"></p>
-										<p>Endereço*:<br><input type="text" name="ender_ed" id="ender" value="'. $linha[2] .'"></p>
-										<p>Idade:<br><input type="text" name="idade_ed" id="idade" value="'. $linha[4] .'"></p>
-										<p id="email1">Email*:<br><input type="text" name="email_ed" id="email" onblur="is_email()" value="'. $linha[5] .'"></p>
-										<p>Telefone*:<br><input type="text" name="fone_ed" id="fone" value="'. $linha[6] .'"></p>
+										<p>Nome*:<br><input type="text" name="nome_ed" id="nome" value="'. $linha[1] .'" maxlength="30"></p>
+										<p>Endereço*:<br><input type="text" name="ender_ed" id="ender" value="'. $linha[2] .'" maxlength="50"></p>
+										<p>Idade:<br><input type="text" name="idade_ed" id="idade" value="'. $linha[4] .'" maxlength="2"></p>
+										<p id="email">Email*:<br><input type="text" name="email_ed" id="email" onblur="is_email()" value="'. $linha[5] .'" placeholder="example@example.com" maxlength="30"></p>
+										<p id="fone1">Telefone*:<br><input type="text" name="fone_ed" id="fone" value="'. $linha[6] .'" placeholder="12345678" onchange="is_fone()" maxlength="8"></p>
 										<p>Sexo:</p>
 										<p>
 											Masculino<input type="radio" name="sexo_ed" id="sexo" '. ($linha[3]=='M'?"checked":"") .'  value="M">
@@ -261,7 +257,6 @@
 					if(!$conexao){
 						die('Não foi possível conectar : '.mysql_error());
 					}
-					//echo 'Conexao bem sucedida <br>';
 
 					mysql_select_db($db,$conexao);
 					
@@ -285,7 +280,6 @@
 					if(!$conexao){
 						die('Não foi possível conectar : '.mysql_error());
 					}
-					//echo 'Conexao bem sucedida <br>';
 
 					mysql_select_db($db,$conexao);
 					
@@ -315,10 +309,5 @@
 				$consulta = mysql_query($deletar,$conexao);
 				echo "<meta HTTP-EQUIV='refresh' CONTENT='0;URL=telaInicial.php'>";
 			}
-		
-		
-		//$insert = "insert into ". $table . $campos . " values ('Marvin','Talvez seja util');";
-		//$update = "update ". $table . " set nome = 'Marvin Graycastle' where nome = 'Marvin';";
-		//$delete = "delete from " . $table . " where nome = 'Marvin Graycastle';";
 		
 ?>
