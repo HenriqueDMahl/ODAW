@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      div {text-align: center;border:1px solid white;width:80%;background-color:black;color:rgb(229,177,58);margin-left: auto;margin-right: auto;}
+      section {width:80%;margin-left: auto;margin-right: auto;}
+      body {background-image: url("../IMAGENS/space.jpg");}
+      nav {text-align:center;width:80%;margin-left: auto;margin-right: auto;}
+      aside {width:50%;color:white;}
+      section {width:80%;color:white;margin-left: auto;margin-right: auto;}
+      article {width:80%;color: white;margin-left: auto;margin-right: auto;}
+    </style>
+    <meta charset="utf-8">
+    <title>EXERCICIO 1 - ODAW -WOLOLOLOLO</title>
+  </head>
+  <body>
+      <div contextmenu="mymenu">
+        <h1>BEM VINDO</h1>
+        <h2><p>Hoje é <time>2018-08-15 16:33</time></p></h2>
+        <math>
+          <mrow>
+            <mrow>
+              <msup>
+                <mi>a</mi>
+                <mn>2</mn>
+              </msup>
+              <mo>+</mo>
+              <msup>
+                <mi>b</mi>
+                <mn>2</mn>
+              </msup>
+            </mrow>
+            <mo>=</mo>
+            <msup>
+              <mi>c</mi>
+              <mn>2</mn>
+            </msup>
+          </mrow>
+        </math>
+        <menu type="context" id="mymenu">
+          <menuitem label="Refresh" onclick="window.location.reload();" icon="ico_reload.png"></menuitem>
+          <menu label="Share on...">
+            <menuitem label="Twitter" icon="ico_twitter.png" onclick="window.open('//twitter.com/intent/tweet?text=' + window.location.href);"></menuitem>
+            <menuitem label="Facebook" icon="ico_facebook.png" onclick="window.open('//facebook.com/sharer/sharer.php?u=' + window.location.href);"></menuitem>
+          </menu>
+          <menuitem label="Email This Page" onclick="window.location='mailto:?body='+window.location.href;"></menuitem>
+        </menu>
+
+        <figure>
+          <img src="uw.png" alt="">
+          <figcaption>EM OBRAS!
+            <details open>
+              <summary>UMA MUSICA E UM TESTE <br> Carregando . . . <br> <progress value="70" max="100">70 %</progress></summary>
+              <section>
+                <mark>TESTE está chegando no <meter low="69" high="80" max="100" value="84">B</meter> limite</mark>
+              </section>
+              <section>
+                <audio controls>
+                  <source src="m.mp3" type="audio/mpeg">
+                </audio>
+              </section>
+            </details> </figcaption>
+        </figure>
+
+        <section style="text-align: left">
+          <aside>
+            <article>
+              <p>Google <input list="browsers" />
+                <datalist id="browsers">
+                  <option value="Chrome">
+                  <option value="Firefox">
+                  <option value="Internet Explorer">
+                  <option value="Opera">
+                  <option value="Safari">
+                </datalist> is a free, open-source web browser developed by Google, released in 2008.
+            </p>
+            </article>
+          </aside>
+        </section>
+        <section>
+          <br><br>
+          <h3>QUAL O DIAMETRO DO CIRCULO?</h3>
+          <svg width="100" height="100">
+            <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
+          </svg>
+          <br><br>
+          <form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0
+            <input type="range" id="a" value="50">100
+            +<input type="number" id="b" value="50">
+            =<output name="x" for="a b"></output>
+          </form>
+          <br><br>
+        </section>
+        <section>
+          <h3>HORA DO FILME</h3>
+          <br><br>
+          <video width="320" height="240" controls>
+           <source src="sw.mp4" type="video/mp4">
+          </video>
+        </section>
+      </div>
+
+      <footer>
+        <nav>
+          <a href="ex1.html">SW EP 4</a>
+          <a href="ex1_5.html">SW EP 5</a>
+          <a href="ex1_6.html">SW EP 6</a>
+          <a href="ex1_1.html">SW EP 1</a>
+        </nav>
+      </footer>
+  </body>
+</html>

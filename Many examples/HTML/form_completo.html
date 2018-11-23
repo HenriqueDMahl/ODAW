@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Exemplos Javascrip</title>
+    <link rel="stylesheet" type="text/css" href="../CSS/css_padrao.css">
+  </head>
+  <body>
+    <script src="../JAVASCRIPT/funcoes.js"></script>
+    <div class="divini">
+        <img src="../IMAGENS/swl.png" alt="">
+    </div>
+    <hr size=6 width=80%>
+        <h1 class="divini">Bem vindo! Que a força esteja com você!</h1>
+    <hr size=6 width=80%>
+    <div class="divd">
+      <br>
+      <br>
+
+      <form id="form" class="" action="../PHP/validaform.php" method="POST">
+        1) Nome <input id="nome" type="text" name="nome" value=""><br>
+        2) Senha <input id="senha" type="password" name="senha" value=""><br>
+        3) Feedback <textarea id="feed" name = "feed"></textarea><br><br>
+        4) Select <select id = "select" name = "selected">
+              <option value="null">...................................................</option>
+              <option value="1">The Phantom Manace</option>
+              <option value="2">Attack of The Clones</option>
+              <option value="3">Revenge Of The Sith</option>
+              <option value="4">A New Hope</option>
+              <option value="5">The Empire Strikes Back</option>
+              <option value="6">Revenge Of The Jedi</option>
+              <option value="7">The Force Awakens</option>
+              <option value="8">The Last Jedi</option>
+            </select><br> <br>
+        5) POST<input id = "post" type="radio" onclick="postorget('post')" name="s" value="p"> GET <input id = "get" type="radio" onclick="postorget('get')" name="s" value="g"> <br>
+        6) Você gosta de Star Wars? Receba noticias!<input id = "check" nome = "checkbox" type="checkbox" name="gsw" value=""> <br> <br>
+        <button type="submit">Salvar</button> <button type="reset">Limpar</button>
+      </form>
+
+    </div>
+  </body>
+</html>
