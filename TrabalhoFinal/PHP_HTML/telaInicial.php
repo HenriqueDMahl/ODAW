@@ -65,6 +65,7 @@
 	<script src="../JAVASCRIPT/javascript.js"></script>
 	<script src="../JAVASCRIPT/popup.js"></script>
 	<script src="../JAVASCRIPT/fone.js"></script>
+	<script src="../JAVASCRIPT/fone2.js"></script>
 	<SCRIPT SRC="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></SCRIPT>
 	<div class = "div_corpo">
 		<!-- MENU -->
@@ -214,9 +215,9 @@
 									<form id="form_contatos" class="form_registro" action="../PHP_HTML/telaInicial.php" method="POST">
 										<p>Nome*:<br><input type="text" name="nome_ed" id="nome" value="'. $linha[1] .'" maxlength="30"></p>
 										<p>Endereço*:<br><input type="text" name="ender_ed" id="ender" value="'. $linha[2] .'" maxlength="50"></p>
-										<p>Idade:<br><input type="text" name="idade_ed" id="idade" value="'. $linha[4] .'" maxlength="2"></p>
-										<p id="email">Email*:<br><input type="text" name="email_ed" id="email" onblur="is_email()" value="'. $linha[5] .'" placeholder="example@example.com" maxlength="30"></p>
-										<p id="fone1">Telefone*:<br><input type="text" name="fone_ed" id="fone" value="'. $linha[6] .'" placeholder="12345678" onchange="is_fone()" maxlength="8"></p>
+										<p id="idadeLb'. (0-$linha[0]) .'">Idade:<br><input style="width: 500px;" type="text" name="idade_ed" id="idade'. (0-$linha[0]) .'" value="'. $linha[4] .'" maxlength="2" onchange="is_idade_table('. (0-$linha[0]) .')"></p>
+										<p id="emailLb'. (0-$linha[0]) .'">Email*:<br><input style="width: 500px;" type="text" name="email_ed" id="email'. (0-$linha[0]) .'" onblur="is_email_table('. (0-$linha[0]) .')" value="'. $linha[5] .'" placeholder="example@example.com" maxlength="30"></p>
+										<p id="foneLb'. (0-$linha[0]) .'">Telefone*:<br><input style="width: 500px;" type="text" name="fone_ed" id="fone'. (0-$linha[0]) .'" value="'. $linha[6] .'" placeholder="12345678" onchange="is_fone2('. (0-$linha[0]) .')" maxlength="8"></p>
 										<p>Sexo:</p>
 										<p>
 											Masculino<input type="radio" name="sexo_ed" id="sexo" '. ($linha[3]=='M'?"checked":"") .'  value="M">
@@ -228,7 +229,7 @@
 											<a href="#" class="buttom_cancelar">Cancelar</a>
 											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-								 			<button id="btConfirmar" name="submit_editar_contato" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
+								 			<button id="btConfirmar'. (0-$linha[0]) .'" name="submit_editar_contato" type="submit" class="buttom_confirmar" onclick="valida_registro()">Confirmar</button>
 										</p>
 								  </form>
 								</div>
@@ -237,7 +238,7 @@
 					echo '<td>';
 						echo '<a href="#"> 
 								<form action="../PHP_HTML/telaInicial.php" method="POST"> 
-									<button name="submit_deletar_contato" type="submit"> 
+									<button name="submit_deletar_contato" type="submit"  onclick="return  confirm('. "tem certeza que quer deletar?" .')"> 
 										<img src="../IMAGENS/delet.png" height="20" width="20">
 									</button> 
 									<input type="text" name="id_contato_del" id="id" value="'. $linha[0] .'" hidden>
